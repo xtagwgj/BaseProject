@@ -1,0 +1,3 @@
+include ':app',':baseproject'//, ":viewlib"
+project(':baseproject').projectDir = new File('library/baseproject')
+//project(':viewlib').projectDir = new File('library/viewlib')

@@ -1,0 +1,63 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.1'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+
+        //Hugo
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+        //jitPack发布
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    config = [
+            buildToolsVersion: "25.0.2",
+            compileVersion   : 25,
+            minSdkVersion    : 19,
+            targetVersion    : 25,
+            versionCode      : 1,
+            versionName      : "1.0.0",
+            packageName      : "com.xtagwgj.baseprojectdemo",
+    ]
+
+    lib = [
+            appcompat_v7    : "25.3.0",
+            recyclerview_v7 : "25.3.0",
+            multidex        : "1.0.1",
+            rxbinding2      : "2.0.0",
+            rxjava2         : "2.0.1",
+            rxandroid2      : "2.0.1",
+            rxdownload2     : "2.0.0-beta3",
+            rxpermissions   : "0.9.3@aar",
+            rxlifecycle2    : "2.0.1",
+            adapterHelper   : "2.9.9",
+            constraintLayout: "1.0.0-beta4",
+
+            //
+            butterknife     : "8.4.0",
+            MPAndroidChart  : "v3.0.2",
+            crashreport     : "+",
+            beanutils       : "1.9.3",
+
+    ]
+}

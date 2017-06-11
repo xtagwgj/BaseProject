@@ -1,0 +1,218 @@
+package com.xtagwgj.baseproject.utils;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.provider.Settings;
+import android.util.DisplayMetrics;
+import android.view.Surface;
+import android.view.View;
+import android.view.WindowManager;
+
+/**
+ * 设备的工具，主要获取设备的信息
+ * Created by xtagwgj on 2017/4/9.
+ */
+
+public class AndroidDeviceUtil {
+
+    /**
+     * 获取设备系统版本号
+     *
+     * @return 设备系统版本号
+     */
+    public static int getSDKVersion() {
+        return android.os.Build.VERSION.SDK_INT;
+    }
+
+    /**
+     * 获取设备AndroidID
+     *
+     * @return AndroidID
+     */
+    @SuppressLint("HardwareIds")
+    public static String getAndroidID(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+
+    /**
+     * 获取设备厂商
+     * <p>如Xiaomi</p>
+     *
+     * @return 设备厂商
+     */
+
+    public static String getManufacturer() {
+        return Build.MANUFACTURER;
+    }
+
+    /**
+     * 获取设备型号
+     * <p>如MI2SC</p>
+     *
+     * @return 设备型号
+     */
+    public static String getModel() {
+        String model = Build.MODEL;
+        if (model != null) {
+            model = model.trim().replaceAll("\\s*", "");
+        } else {
+            model = "";
+        }
+        return model;
+    }
+
+    /**
+     * 获取屏幕的宽度（单位：px）
+     *
+     * @return 屏幕宽px
+     */
+    public static int getScreenWidth(Context mContext) {
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();// 创建了一张白纸
+        windowManager.getDefaultDisplay().getMetrics(dm);// 给白纸设置宽高
+        return dm.widthPixels;
+    }
+
+    /**
+     * 获取屏幕的高度（单位：px）
+     *
+     * @return 屏幕高px
+     */
+    public static int getScreenHeight(Context mContext) {
+        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();// 创建了一张白纸
+        windowManager.getDefaultDisplay().getMetrics(dm);// 给白纸设置宽高
+        return dm.heightPixels;
+    }
+
+    /**
+     * 设置屏幕为横屏
+     * <p>还有一种就是在Activity中加属性android:screenOrientation="landscape"</p>
+     * <p>不设置Activity的android:configChanges时，切屏会重新调用各个生命周期，切横屏时会执行一次，切竖屏时会执行两次</p>
+     * <p>设置Activity的android:configChanges="orientation"时，切屏还是会重新调用各个生命周期，切横、竖屏时只会执行一次</p>
+     * <p>设置Activity的android:configChanges="orientation|keyboardHidden|screenSize"（4.0以上必须带最后一个参数）时
+     * 切屏不会重新调用各个生命周期，只会执行onConfigurationChanged方法</p>
+     *
+     * @param activity activity
+     */
+    public static void setLandscape(Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    /**
+     * 设置屏幕为竖屏
+     *
+     * @param activity activity
+     */
+    public static void setPortrait(Activity activity) {
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
+    /**
+     * 判断是否横屏
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isLandscape(Context mContext) {
+        return mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    /**
+     * 判断是否竖屏
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isPortrait(Context mContext) {
+        return mContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    /**
+     * 获取屏幕旋转角度
+     *
+     * @param activity activity
+     * @return 屏幕旋转角度
+     */
+    public static int getScreenRotation(Activity activity) {
+        switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
+            default:
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
+        }
+    }
+
+    /**
+     * 获取当前屏幕截图，包含状态栏
+     *
+     * @param activity activity
+     * @return Bitmap
+     */
+    public static Bitmap captureWithStatusBar(Activity activity) {
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bmp = view.getDrawingCache();
+        DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        Bitmap ret = Bitmap.createBitmap(bmp, 0, 0, dm.widthPixels, dm.heightPixels);
+        view.destroyDrawingCache();
+        return ret;
+    }
+
+    /**
+     * 获取当前屏幕截图，不包含状态栏
+     *
+     * @param activity activity
+     * @return Bitmap
+     */
+    public static Bitmap captureWithoutStatusBar(Activity activity) {
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bmp = view.getDrawingCache();
+        int statusBarHeight = getStatusBarHeight(activity);
+        DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        Bitmap ret = Bitmap.createBitmap(bmp, 0, statusBarHeight, dm.widthPixels, dm.heightPixels - statusBarHeight);
+        view.destroyDrawingCache();
+        return ret;
+    }
+
+    /**
+     * 获取状态栏高度
+     *
+     * @param context context
+     * @return 状态栏高度
+     */
+    public static int getStatusBarHeight(Context context) {
+        int result = -1;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+    /**
+     * 判断是否锁屏
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isScreenLock(Context mContext) {
+        KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+        return km.inKeyguardRestrictedInputMode();
+    }
+
+}

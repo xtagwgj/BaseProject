@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义标题栏-->
+    <declare-styleable name="TitleLayout">
+        <attr name="titleName" format="string" />
+        <attr name="rightImgShow" format="boolean" />
+        <attr name="rightImgRes" format="integer" />
+        <attr name="arrowImgShow" format="boolean" />
+        <attr name="arrowImgRes" format="integer" />
+        <attr name="bgColorRes" format="color" />
+    </declare-styleable>
+
+</resources>
