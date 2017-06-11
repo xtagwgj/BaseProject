@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
-import com.xtagwgj.baseproject.AppManager;
+import com.xtagwgj.baseproject.base.AppManager;
 import com.xtagwgj.baseproject.R;
 import com.xtagwgj.baseproject.constant.BaseConstants;
 import com.xtagwgj.baseproject.utils.StringUtils;

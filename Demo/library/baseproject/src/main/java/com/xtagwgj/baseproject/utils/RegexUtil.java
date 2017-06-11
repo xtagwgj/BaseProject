@@ -1,12 +1,15 @@
 package com.xtagwgj.baseproject.utils;
 
+import com.xtagwgj.baseproject.constant.RegexConstants;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 正则表达式工具
  * Created by zy on 2016/6/30.
  */
-public class RegexUtil {
+public class RegexUtil extends RegexConstants {
     /**
      * 验证Email
      *
@@ -29,8 +32,7 @@ public class RegexUtil {
      * @return 验证成功返回true，验证失败返回false
      */
     public static boolean checkCellPhone(String mobile) {
-        String regex = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[3,5-8])|(18[0-9]))\\d{8}$";
-        return Pattern.matches(regex, mobile);
+        return Pattern.matches(REGEX_MOBILE_EXACT, mobile);
     }
 
     /**
@@ -38,10 +40,13 @@ public class RegexUtil {
      * @return
      */
     public static boolean checkIdCard(String idCard) {
-//        String reg15 = "^[1-9]\\d{7}((0\\[1-9])|(1[0-2]))(([0\\[1-9]|1\\d|2\\d])|3[0-1])\\d{2}([0-9]|x|X){1}$";
-//        String reg18 = "^[1-9]\\d{5}[1-9]\\d{3}((0\\[1-9]))|((1[0-2]))(([0\\[1-9]|1\\d|2\\d])|3[0-1])\\d{3}([0-9]|x|X){1}$";
-        String regex = "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X)$";
-        return Pattern.matches(regex, idCard);
+        if (StringUtils.isEmpty(idCard))
+            return false;
+
+        if (idCard.length() == 15) {
+            return Pattern.matches(REGEX_ID_CARD15, idCard);
+        } else
+            return Pattern.matches(REGEX_ID_CARD18, idCard);
     }
 
     /**
@@ -66,6 +71,9 @@ public class RegexUtil {
      * @return 接取出来的验证码
      */
     public static String getEcode(String body, int codeLength) {
+
+        if (StringUtils.isEmpty(body))
+            return "";
 
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]{" + codeLength + "}");
         Matcher matcher = pattern.matcher(body);

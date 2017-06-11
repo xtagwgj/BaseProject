@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.components.RxFragment;
-import com.xtagwgj.baseproject.RxManager;
 import com.xtagwgj.baseproject.utils.TUtil;
 import com.xtagwgj.baseproject.utils.ToastUtils;
 

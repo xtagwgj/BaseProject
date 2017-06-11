@@ -1,9 +1,8 @@
 package com.xtagwgj.baseproject.utils;
 
-
 import android.annotation.SuppressLint;
 
-import com.xtagwgj.baseproject.constant.MemoryConstants;
+import com.xtagwgj.baseproject.constant.MemoryUnit;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -1314,9 +1313,9 @@ public final class FileUtils {
         if (is == null) return null;
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
-            byte[] b = new byte[MemoryConstants.KB];
+            byte[] b = new byte[MemoryUnit.KB];
             int len;
-            while ((len = is.read(b, 0, MemoryConstants.KB)) != -1) {
+            while ((len = is.read(b, 0, MemoryUnit.KB)) != -1) {
                 os.write(b, 0, len);
             }
             return os;
@@ -1361,14 +1360,14 @@ public final class FileUtils {
     private static String byte2FitMemorySize(long byteNum) {
         if (byteNum < 0) {
             return "shouldn't be less than zero!";
-        } else if (byteNum < MemoryConstants.KB) {
+        } else if (byteNum < MemoryUnit.KB) {
             return String.format("%.3fB", (double) byteNum + 0.0005);
-        } else if (byteNum < MemoryConstants.MB) {
-            return String.format("%.3fKB", (double) byteNum / MemoryConstants.KB + 0.0005);
-        } else if (byteNum < MemoryConstants.GB) {
-            return String.format("%.3fMB", (double) byteNum / MemoryConstants.MB + 0.0005);
+        } else if (byteNum < MemoryUnit.MB) {
+            return String.format("%.3fKB", (double) byteNum / MemoryUnit.KB + 0.0005);
+        } else if (byteNum < MemoryUnit.GB) {
+            return String.format("%.3fMB", (double) byteNum / MemoryUnit.MB + 0.0005);
         } else {
-            return String.format("%.3fGB", (double) byteNum / MemoryConstants.GB + 0.0005);
+            return String.format("%.3fGB", (double) byteNum / MemoryUnit.GB + 0.0005);
         }
     }
 

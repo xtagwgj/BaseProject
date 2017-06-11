@@ -2,8 +2,6 @@ package com.xtagwgj.baseproject.base;
 
 import android.content.Context;
 
-import com.xtagwgj.baseproject.RxManager;
-
 /**
  * Created by xtagwgj on 2017/3/20.
  */

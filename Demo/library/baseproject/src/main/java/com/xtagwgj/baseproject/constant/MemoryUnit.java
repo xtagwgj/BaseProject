@@ -7,29 +7,25 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * 存储相关常量
- * Created by xtagwgj on 2017/4/9.
+ * Created by xtagwgj on 2017/6/11.
  */
-
-public class MemoryConstants {
+@IntDef({MemoryUnit.BYTE, MemoryUnit.KB, MemoryUnit.MB, MemoryUnit.GB})
+@Retention(RetentionPolicy.SOURCE)
+public @interface MemoryUnit {
     /**
      * Byte与Byte的倍数
      */
-    public static final int BYTE = 1;
+    int BYTE = 1;
     /**
      * KB与Byte的倍数
      */
-    public static final int KB = 1024;
+    int KB = 1024;
     /**
      * MB与Byte的倍数
      */
-    public static final int MB = 1048576;
+    int MB = 1048576;
     /**
      * GB与Byte的倍数
      */
-    public static final int GB = 1073741824;
-
-    @IntDef({BYTE, KB, MB, GB})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Unit {
-    }
+    int GB = 1073741824;
 }

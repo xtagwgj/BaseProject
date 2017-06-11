@@ -5,7 +5,7 @@ package com.xtagwgj.baseproject.constant;
  * Created by xtagwgj on 2017/4/9.
  */
 
-public final class RegexConstants {
+public  class RegexConstants {
     /**
      * 正则：手机号（简单）
      */

@@ -1,4 +1,4 @@
-package com.xtagwgj.baseproject;
+package com.xtagwgj.baseproject.base;
 
 import android.support.annotation.NonNull;
 

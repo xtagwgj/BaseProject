@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.xtagwgj.baseproject.AppManager;
 import com.xtagwgj.baseproject.R;
-import com.xtagwgj.baseproject.RxManager;
+import com.xtagwgj.baseproject.utils.StringUtils;
 import com.xtagwgj.baseproject.utils.TUtil;
+import com.xtagwgj.baseproject.utils.ToastUtils;
 import com.xtagwgj.baseproject.widget.StatusBarCompat;
 import com.xtagwgj.baseproject.widget.daynightmode.ChangeModeController;
 
@@ -114,20 +113,20 @@ public abstract class _BaseMvpActivity<P extends _BaseMvpPresenter, M extends _B
 
     protected void showToast(String msg) {
 //        Snackbar.make(getCurrentFocus(), msg, Snackbar.LENGTH_SHORT).show();
-        Toast.makeText(this, nullStrToEmpty(msg), Toast.LENGTH_SHORT).show();
+        ToastUtils.showShortToast(this, nullStrToEmpty(msg));
     }
 
     protected void showToast(int strId) {
 //        Snackbar.make(getCurrentFocus(), strId, Snackbar.LENGTH_SHORT).show();
-        Toast.makeText(this, strId, Toast.LENGTH_SHORT).show();
+        ToastUtils.showShortToast(this, getString(strId));
     }
 
     protected String nullStrToEmpty(String str) {
-        return isEmpty(str) ? "" : str;
+        return StringUtils.null2Length0(str);
     }
 
     protected boolean isEmpty(String str) {
-        return str == null || str.trim().length() == 0;
+        return StringUtils.isEmpty(str);
     }
 
     protected boolean isEmpty(List list) {
