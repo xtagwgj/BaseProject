@@ -10,4 +10,65 @@
         <attr name="bgColorRes" format="color" />
     </declare-styleable>
 
+
+    <!--设置视图-->
+    <declare-styleable name="SettingView">
+        <attr name="leftText" format="string" />
+        <attr name="leftIcon" format="integer" />
+        <attr name="rightIcon" format="integer" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="isShowUnderLine" format="boolean" />
+        <attr name="rightStyle" format="enum">
+            <enum name="iconShow" value="0" />
+            <enum name="iconHide" value="1" />
+            <enum name="iconCheck" value="2" />
+            <enum name="iconSwitch" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <!--StarBar-->
+    <declare-styleable name="RatingBar">
+        <!--星星间距-->
+        <attr name="starDistance" format="dimension" />
+        <!--星星大小-->
+        <attr name="starSize" format="dimension" />
+        <!--星星个数-->
+        <attr name="starCount" format="integer" />
+        <!--星星空图-->
+        <attr name="starEmpty" format="reference" />
+        <!--星星满图-->
+        <attr name="starFill" format="reference" />
+    </declare-styleable>
+
+    <!--LoadingLayout-->
+    <declare-styleable name="LoadingLayout">
+        <attr name="isFirstVisible" format="boolean" />
+    </declare-styleable>
+
+
+    <!--swipeMenuLayou-->
+    <declare-styleable name="SwipeMenuLayout">
+        <attr name="leftViewId" format="reference" />
+        <attr name="rightViewId" format="reference" />
+        <attr name="contentViewId" format="reference" />
+    </declare-styleable>
+
+    <!--LoadingDialog-->
+    <attr name="strokeColor" format="color" />
+    <attr name="speed">
+        <enum name="speedOne" value="1" />
+        <enum name="speedTwo" value="2" />
+    </attr>
+
+    <declare-styleable name="RightDiaView">
+        <attr name="strokeColor" />
+        <attr name="speed" />
+    </declare-styleable>
+
+    <declare-styleable name="WrongDiaView">
+        <attr name="strokeColor" />
+        <attr name="speed" />
+    </declare-styleable>
+
 </resources>

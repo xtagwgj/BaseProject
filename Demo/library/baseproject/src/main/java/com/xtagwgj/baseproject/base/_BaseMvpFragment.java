@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle2.components.RxFragment;
 import com.xtagwgj.baseproject.utils.TUtil;
 import com.xtagwgj.baseproject.utils.ToastUtils;
 
@@ -18,7 +17,7 @@ import java.util.List;
  * Created by xtagwgj on 2017/3/22.
  */
 
-public abstract class _BaseMvpFragment<P extends _BaseMvpPresenter, M extends _BaseMvpModel> extends RxFragment {
+public abstract class _BaseMvpFragment<P extends _BaseMvpPresenter, M extends _BaseMvpModel> extends _BaseFragment {
     public P mPresenter;
     public M mModel;
     public RxManager mRxManager;
@@ -26,7 +25,7 @@ public abstract class _BaseMvpFragment<P extends _BaseMvpPresenter, M extends _B
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
+        rootView = LayoutInflater.from(getActivity()).inflate(getLayoutId(), null);
 
         mRxManager = new RxManager();
         mPresenter = TUtil.getT(this, 0);
@@ -38,20 +37,11 @@ public abstract class _BaseMvpFragment<P extends _BaseMvpPresenter, M extends _B
         initView(savedInstanceState);
         initEventListener();
         initPresenter();
-        return view;
+        return rootView;
     }
-
-
-    //获取布局文件
-    protected abstract int getLayoutId();
 
     //简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
     public abstract void initPresenter();
-
-    //初始化view
-    protected abstract void initView(@Nullable Bundle savedInstanceState);
-
-    protected abstract void initEventListener();
 
     @Override
     public void onDestroyView() {

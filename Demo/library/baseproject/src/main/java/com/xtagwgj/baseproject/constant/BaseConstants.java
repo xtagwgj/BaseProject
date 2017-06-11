@@ -19,6 +19,4 @@ public class BaseConstants {
     //密码最小的位数
     public static final int LENGTH_PASSWORD_MIN = 6;
 
-
-
 }

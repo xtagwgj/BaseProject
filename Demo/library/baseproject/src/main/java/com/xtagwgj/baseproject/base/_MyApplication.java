@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 /**
+ * initService指的是初始化继承字_InitializeService的服务
+ * 必须要在application中初始化的服务就在Application中，不必须的就在service中初始化
  * Created by xtagwgj on 2017/4/10.
  */
 
