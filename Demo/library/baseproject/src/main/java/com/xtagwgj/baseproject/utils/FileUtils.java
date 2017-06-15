@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 文件工具类
  * Created by xtagwgj on 2017/4/9.
  */
 

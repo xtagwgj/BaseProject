@@ -8,6 +8,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
@@ -42,6 +43,13 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
 
         doBeforeSetContentView();
         setContentView(getLayoutId());
+
+        //添加FitsSystemWindows
+        ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
+        View parentView = contentFrameLayout.getChildAt(0);
+        if (parentView != null) {
+            parentView.setFitsSystemWindows(true);
+        }
 
         initView(savedInstanceState);
         initEventListener();
@@ -168,15 +176,20 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
     }
 
     protected void showLoadingDialog(String loadingText, String successText) {
+        showLoadingDialog(loadingText, successText, false);
+    }
+
+    protected void showLoadingDialog(String loadingText, String successText, boolean interceptBack) {
         closeLoadingDialog();
 
         loadingDialog = new LoadingDialog(this);
         loadingDialog.setLoadingText(loadingText)
                 .setSuccessText(successText)
-                .setInterceptBack(false)
+                .setInterceptBack(interceptBack)
                 .closeSuccessAnim()
                 .show();
     }
+
 
     protected void setFailLoadingText(String failLoadingText) {
         if (loadingDialog != null)

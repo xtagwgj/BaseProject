@@ -1,5 +1,7 @@
 package com.xtagwgj.baseproject.utils;
 
+import java.util.Locale;
+
 /**
  * 字符串相关工具类
  * Created by xtagwgj on 2017/4/10.
@@ -182,5 +184,51 @@ public class StringUtils {
             }
         }
         return new String(chars);
+    }
+
+    /**
+     * 16进制的字符串转化为字节数组
+     *
+     * @param hexString 16进制的字符串
+     * @return 字节数组
+     */
+    public static byte[] hexStringToBytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase(Locale.getDefault());
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
+
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    /**
+     * 数组转换成十六进制字符串
+     *
+     * @param bArray 字节数组
+     * @return HexString 十六进制字符串
+     */
+    public static String bytesToHexString(byte[] bArray) {
+        if (bArray == null) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer(bArray.length);
+        String sTemp;
+        for (int i = 0; i < bArray.length; i++) {
+            sTemp = Integer.toHexString(0xFF & bArray[i]);
+            if (sTemp.length() < 2)
+                sb.append(0);
+            sb.append(sTemp.toUpperCase(Locale.getDefault()));
+        }
+        return sb.toString();
     }
 }
