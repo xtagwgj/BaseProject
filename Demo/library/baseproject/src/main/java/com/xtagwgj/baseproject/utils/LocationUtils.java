@@ -79,7 +79,7 @@ public class LocationUtils {
         mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mListener = listener;
         if (!isLocationEnabled(mContext)) {
-            ToastUtils.showShortToastSafe("无法定位，请打开定位服务");
+            ToastUtils.showShortToastSafe(mContext,"无法定位，请打开定位服务");
 
             return false;
         }

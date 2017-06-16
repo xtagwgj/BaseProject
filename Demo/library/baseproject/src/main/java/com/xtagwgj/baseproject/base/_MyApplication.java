@@ -22,7 +22,6 @@ public abstract class _MyApplication extends Application {
 
     protected abstract void initService();
 
-
     /**
      * 分包
      *

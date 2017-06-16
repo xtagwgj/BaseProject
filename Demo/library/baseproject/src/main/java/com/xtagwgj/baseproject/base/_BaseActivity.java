@@ -62,7 +62,7 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         //设置昼夜主题
         initTheme();
 
-        // 把actvity放到application栈中管理
+        // 把activity放到栈中管理
         AppManager.getAppManager().addActivity(this);
 
         //设置没有标题栏和ActionBar

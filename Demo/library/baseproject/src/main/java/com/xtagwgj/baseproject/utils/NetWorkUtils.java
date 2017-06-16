@@ -1,11 +1,14 @@
 package com.xtagwgj.baseproject.utils;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -19,6 +22,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 网络连接工具类
@@ -78,16 +86,23 @@ public class NetWorkUtils {
      *
      * @return {@code true}: 可用<br>{@code false}: 不可用
      */
-    public static boolean isAvailableByPing() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("ping -c 1 114.114.114.114");
-            int exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public static Observable<Boolean> isAvailableByPing() {
+        return
+                Observable.just(Runtime.getRuntime())
+                        .map(new Function<Runtime, Boolean>() {
+                            @Override
+                            public Boolean apply(Runtime runtime) throws Exception {
+
+                                try {
+                                    Process ipProcess = runtime.exec("ping -c 1 114.114.114.114");
+                                    return ipProcess.waitFor() == 0;
+                                } catch (IOException | InterruptedException e) {
+                                    return false;
+                                }
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                ;
     }
 
     /**
@@ -156,15 +171,11 @@ public class NetWorkUtils {
      */
     public static void setWifiEnabled(Context mContext, boolean enabled) {
         WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
-        if (enabled) {
-            if (!wifiManager.isWifiEnabled()) {
-                wifiManager.setWifiEnabled(true);
-            }
-        } else {
-            if (wifiManager.isWifiEnabled()) {
-                wifiManager.setWifiEnabled(false);
-            }
-        }
+
+        //当前设备状态跟要设置的状态不一致，就设置
+        if (wifiManager.isWifiEnabled() == !enabled)
+            wifiManager.setWifiEnabled(enabled);
+
     }
 
     /**
@@ -187,8 +198,14 @@ public class NetWorkUtils {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    public static boolean isWifiAvailable(Context mContext) {
-        return getWifiEnabled(mContext) && isAvailableByPing();
+    public static Observable<Boolean> isWifiAvailable(final Context mContext) {
+
+        return isAvailableByPing().map(new Function<Boolean, Boolean>() {
+            @Override
+            public Boolean apply(Boolean aBoolean) throws Exception {
+                return aBoolean && getWifiEnabled(mContext);
+            }
+        });
     }
 
     /**

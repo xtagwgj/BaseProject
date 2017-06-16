@@ -52,11 +52,11 @@ public abstract class _BaseMvpFragment<P extends _BaseMvpPresenter, M extends _B
     }
 
     protected void showToast(String msg) {
-        ToastUtils.showShortToast(msg);
+        ToastUtils.showShortToast(getActivity(), msg);
     }
 
     protected void showToast(int strId) {
-        ToastUtils.showShortToast(getString(strId));
+        ToastUtils.showShortToast(getActivity(), getString(strId));
     }
 
     protected String nullStrToEmpty(String str) {
