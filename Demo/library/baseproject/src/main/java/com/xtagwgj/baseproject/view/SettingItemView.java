@@ -17,8 +17,7 @@ import android.widget.TextView;
 import com.xtagwgj.baseproject.R;
 
 /**
- *
- *
+ * 设置列表视图
  * Created by xtagwgj on 2017/4/6.
  * <p>
  * 属性	            说明	                类型

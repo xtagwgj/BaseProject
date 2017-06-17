@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 列表外嵌套的RadioGroup
  * Created by zy on 2016/10/11.
  */
 
