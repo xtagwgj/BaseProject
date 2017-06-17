@@ -3,6 +3,7 @@ package com.xtagwgj.baseproject.base;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * 初始化服务
@@ -19,7 +20,7 @@ public abstract class _InitializeService extends IntentService {
         super("InitializeService");
     }
 
-    public static void start(Context context,Class intentServiceClass) {
+    public static void start(Context context, Class intentServiceClass) {
         Intent intent = new Intent(context, intentServiceClass);
         intent.setAction(ACTION_INIT_WHEN_APP_CREATE);
         context.startService(intent);
@@ -32,6 +33,7 @@ public abstract class _InitializeService extends IntentService {
             final String action = intent.getAction();
             if (ACTION_INIT_WHEN_APP_CREATE.equals(action)) {
                 performInit();
+                Log.e(TAG, "初始化服务开始。。。");
             }
         }
     }

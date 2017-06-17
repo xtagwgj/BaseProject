@@ -146,7 +146,7 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
 
     @IntDef({TopBarShow.STATUS, TopBarShow.TRANSLATE})
     @Retention(RetentionPolicy.SOURCE)
-    @interface TopBarShow {
+    public  @interface TopBarShow {
         int STATUS = 0;
         int TRANSLATE = 1;
     }

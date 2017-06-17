@@ -1,82 +1,85 @@
 package com.xtagwgj.baseprojectdemo;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.OrientationHelper;
 
-import com.xtagwgj.baseproject.receiver.SmsReceiver;
-import com.xtagwgj.baseproject.receiver.SmsVerifyCatcher;
-import com.xtagwgj.baseproject.utils.LogUtils;
-import com.xtagwgj.baseproject.view.Sneaker;
+import com.facebook.litho.Component;
+import com.facebook.litho.ComponentContext;
+import com.facebook.litho.ComponentInfo;
+import com.facebook.litho.LithoView;
+import com.facebook.litho.widget.LinearLayoutInfo;
+import com.facebook.litho.widget.Recycler;
+import com.facebook.litho.widget.RecyclerBinder;
+import com.facebook.soloader.SoLoader;
 
 public class MainActivity extends AppCompatActivity {
 
-    SmsVerifyCatcher smsVerifyCatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
+//
+//        findViewById(R.id.numberRunning).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Sneaker.with(MainActivity.this)
+//                        .setTitle("Warning!", R.color.day_background_color)
+//                        .setMessage("Try to get smsCode !!!", R.color.day_background_color)
+//                        .setDuration(6000)
+//                        .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+//                        .sneakError();
+//            }
+//        });
 
-        smsVerifyCatcher = new SmsVerifyCatcher(this, new SmsReceiver.OnSmsCatchListener() {
-            @Override
-            public void onSmsCatch(String message) {
-                LogUtils.d("onSmsCatch", message);
-            }
+        //初始化
+        SoLoader.init(this, false);
 
-            @Override
-            public void onSmsCodeCatch(String code) {
-                LogUtils.d("onSmsCodeCatch", code);
+        final ComponentContext c = new ComponentContext(this);
 
-                Sneaker.with(MainActivity.this)
-                        .setTitle("Success!")
-                        .setMessage("Get SmsCode Success! resultCode = " + code)
-                        .sneakSuccess();
-            }
-        });
+//        LithoView lithoView = LithoView.create(
+//                this,
+//                Text.create(c)
+//                        .text("add a predefined Text Litho component to an activity")
+//                        .textSizeSp(18)
+//                        .textColor(getResources().getColor(android.R.color.black))
+//                        .build()
+//        );
+//        setContentView(lithoView);
 
-        //手机号过滤
-//        smsVerifyCatcher.setPhoneNumberFilter();
-        //消息过滤
-//        smsVerifyCatcher.setMessageFilter();
-        //验证码的正则表达式
-        smsVerifyCatcher.setCodeFilter("(?<![0-9])([0-9]{4})(?![0-9])");
+        //列表的item 单个自定义的Component
+//        Component listItem = SubContentItem.create(c).build();
+//        setContentView(LithoView.create(this, listItem));
 
 
-        findViewById(R.id.numberRunning).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Sneaker.with(MainActivity.this)
-                        .setTitle("Warning!", R.color.day_background_color)
-                        .setMessage("Try to get smsCode !!!",  R.color.day_background_color)
-                        .setDuration(6000)
-                        .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
-//                        .setIcon(R.mipmap.ic_launcher)
-                        .sneakError();
-            }
-        });
+        //创建一个列表
+        RecyclerBinder recyclerBinder = new RecyclerBinder(c, new LinearLayoutInfo(this, OrientationHelper.VERTICAL, false));
+        Component<Recycler> recyclerComponent = Recycler.create(c).binder(recyclerBinder).build();
+        //使用item填充binder上
+        addContent(recyclerBinder, c);
 
+        setContentView(LithoView.create(this, recyclerComponent));
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        smsVerifyCatcher.onStop();
+    /**
+     * 给recycler添加数据
+     */
+    private static void addContent(RecyclerBinder recyclerBinder, ComponentContext context) {
+        for (int i = 0; i < 32; i++) {
+            recyclerBinder.insertItemAt(
+                    i,
+                    ComponentInfo.create()
+                            .component(
+                                    SubContentItem.create(context)
+                                            .color(i % 2 == 0 ? Color.WHITE : Color.LTGRAY)
+                                            .title("Your First Custom Component " + (i + 1))
+                                            .subContent("Ready? It’s time to dive in and build this component. In Litho, you write Spec classes to declare the layout for your components. The framework then generates the underlying component class that you use in your code to create a component instance.")
+                                            .build()
+                            )
+                            .build());
+        }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        smsVerifyCatcher.onStart();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
 }
