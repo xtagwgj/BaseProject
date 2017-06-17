@@ -1,58 +1,57 @@
 package com.xtagwgj.baseprojectdemo;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
-import com.xtagwgj.baseproject.utils.NetWorkUtils;
-import com.xtagwgj.baseproject.view.NumberRunningTextView;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
+import com.xtagwgj.baseproject.receiver.SmsReceiver;
+import com.xtagwgj.baseproject.receiver.SmsVerifyCatcher;
+import com.xtagwgj.baseproject.utils.LogUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private NumberRunningTextView viewById;
-
-    private Boolean isNetConn = true;
+    SmsVerifyCatcher smsVerifyCatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        viewById = (NumberRunningTextView) findViewById(R.id.numberRunning);
-        viewById.setOnClickListener(new View.OnClickListener() {
+        smsVerifyCatcher = new SmsVerifyCatcher(this, new SmsReceiver.OnSmsCatchListener() {
             @Override
-            public void onClick(View v) {
+            public void onSmsCatch(String message) {
+                LogUtils.d("onSmsCatch", message);
+            }
 
+            @Override
+            public void onSmsCodeCatch(String code) {
+                LogUtils.d("onSmsCodeCatch", code);
             }
         });
-
-        registerReceiver(mReceiver, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-
+        //手机号过滤
+//        smsVerifyCatcher.setPhoneNumberFilter();
+        //消息过滤
+//        smsVerifyCatcher.setMessageFilter();
+        //验证码的正则表达式
+        smsVerifyCatcher.setCodeFilter("(?<![0-9])([0-9]{4})(?![0-9])");
     }
 
-    BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            NetWorkUtils.isAvailableByPing()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Boolean>() {
-                        @Override
-                        public void accept(Boolean aBoolean) throws Exception {
-                            isNetConn = aBoolean;
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                        }
-                    });
-        }
-    };
+    @Override
+    protected void onStop() {
+        super.onStop();
+        smsVerifyCatcher.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        smsVerifyCatcher.onStart();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 }

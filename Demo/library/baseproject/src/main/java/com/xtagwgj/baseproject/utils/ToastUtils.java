@@ -15,7 +15,7 @@ public class ToastUtils {
 
     private static Toast sToast;
     private static Handler sHandler = new Handler(Looper.getMainLooper());
-    private static boolean isJumpWhenMore;
+    private static boolean isJumpWhenMore = false;
 
     private ToastUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
