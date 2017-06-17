@@ -12,6 +12,10 @@ import android.support.v4.content.ContextCompat;
 /**
  * 短信验证
  * Created by xtagwgj on 2017/6/17.
+ * <p>
+ * 记得添加权限
+ * <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+ * <uses-permission android:name="android.permission.READ_SMS"/>
  */
 /*
 
@@ -26,11 +30,11 @@ import android.support.v4.content.ContextCompat;
                 LogUtils.d("onSmsCodeCatch", code);
             }
         });
-        //手机号过滤
+        //手机号过滤 不需要可不设置
         smsVerifyCatcher.setPhoneNumberFilter();
-        //消息过滤
+        //消息过滤 不需要可不设置
         smsVerifyCatcher.setMessageFilter();
-        //验证码的正则表达式
+        //验证码的正则表达式 不通过或为null不回调onSmsCodeCatch
         smsVerifyCatcher.setCodeFilter("(?<![0-9])([0-9]{4})(?![0-9])");
 
     @Override
