@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.xtagwgj'
+group = 'com.github.xtagwgj'
 
 def cfg = rootProject.ext.config
 def libs = rootProject.ext.lib
