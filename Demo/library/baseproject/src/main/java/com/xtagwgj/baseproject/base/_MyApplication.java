@@ -1,8 +1,6 @@
 package com.xtagwgj.baseproject.base;
 
 import android.app.Application;
-import android.content.Context;
-import android.support.multidex.MultiDex;
 
 /**
  * initService指的是初始化继承字_InitializeService的服务
@@ -22,15 +20,15 @@ public abstract class _MyApplication extends Application {
 
     protected abstract void initService();
 
-    /**
-     * 分包
-     *
-     * @param base
-     */
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }
+//    /**
+//     * 分包
+//     *
+//     * @param base
+//     */
+//    @Override
+//    protected void attachBaseContext(Context base) {
+//        super.attachBaseContext(base);
+//        MultiDex.install(this);
+//    }
 
 }

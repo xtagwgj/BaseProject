@@ -1,13 +1,27 @@
 package com.xtagwgj.baseproject.receiver;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 
 import com.xtagwgj.baseproject.utils.StringUtils;
 
 /**
+ * 在Android M 以上系统记得添加权限请求
+ * new RxPermissions(this)
+ * .requestEach(Manifest.permission.PROCESS_OUTGOING_CALLS)
+ * .subscribe(new Consumer<Permission>() {
+ *
+ * @Override public void accept(Permission permission) throws Exception {
+ * <p>
+ * }
+ * });
+ *
  * <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
  * <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
  * <p/>
@@ -28,14 +42,7 @@ public class PhoneReceiver extends BroadcastReceiver {
 
     private static final String TAG = "PhoneReceiver";
 
-    private static final String RINGING = "RINGING";
-    private static final String OFFHOOK = "OFFHOOK";
-    private static final String IDLE = "IDLE";
-
-    private static final String PHONE_STATE = "android.intent.action.PHONE_STATE";
-    private static final String NEW_OUTGOING_CALL = "android.intent.action.NEW_OUTGOING_CALL";
-    private static final String INTENT_STATE = "state";
-    private static final String INTENT_INCOMING_NUMBER = "incoming_number";
+    private static final String NEW_OUTGOING_CALL = Intent.ACTION_NEW_OUTGOING_CALL;
     private PhoneListener phoneListener;
     private boolean isDialOut;
     private String number;
@@ -51,32 +58,46 @@ public class PhoneReceiver extends BroadcastReceiver {
             if (phoneListener != null) {
                 phoneListener.onPhoneStateChanged(CallState.Outgoing, number);
             }
-        } else if (PHONE_STATE.equals(intent.getAction())) {
-            String state = intent.getStringExtra(INTENT_STATE);
-            String inNumber = intent.getStringExtra(INTENT_INCOMING_NUMBER);
-            if (!StringUtils.isEmpty(inNumber)) {
-                this.number = inNumber;
-            }
-            if (RINGING.equals(state)) {
-                isDialOut = false;
-                if (phoneListener != null) {
-                    phoneListener.onPhoneStateChanged(CallState.IncomingRing, number);
-                }
-            } else if (OFFHOOK.equals(state)) {
-                if (!isDialOut && phoneListener != null) {
-                    phoneListener.onPhoneStateChanged(CallState.Incoming, number);
-                }
-            } else if (IDLE.equals(state)) {
-                if (isDialOut) {
-                    if (phoneListener != null) {
-                        phoneListener.onPhoneStateChanged(CallState.OutgoingEnd, number);
+        } else {
+
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
+            tm.listen(new PhoneStateListener() {
+                @Override
+                public void onCallStateChanged(int state, String incomingNumber) {
+                    super.onCallStateChanged(state, incomingNumber);
+
+                    switch (state) {
+                        case TelephonyManager.CALL_STATE_RINGING:
+                            isDialOut = false;
+                            //输出来电号码
+                            number = incomingNumber;
+                            System.out.println("响铃:来电号码" + incomingNumber);
+
+                            if (phoneListener != null) {
+                                phoneListener.onPhoneStateChanged(CallState.IncomingRing, number);
+                            }
+
+                            break;
+
+                        case TelephonyManager.CALL_STATE_IDLE:
+                            System.out.println("挂断");
+                            if (phoneListener != null) {
+                                phoneListener.onPhoneStateChanged(
+                                        isDialOut ? CallState.OutgoingEnd : CallState.IncomingEnd,
+                                        number);
+                            }
+
+                            break;
+                        case TelephonyManager.CALL_STATE_OFFHOOK:
+                            System.out.println("接听");
+                            if (!isDialOut && phoneListener != null) {
+                                phoneListener.onPhoneStateChanged(CallState.Incoming, number);
+                            }
+                            break;
+
                     }
-                } else {
-                    if (phoneListener != null) {
-                        phoneListener.onPhoneStateChanged(CallState.IncomingEnd, number);
-                    }
                 }
-            }
+            }, PhoneStateListener.LISTEN_CALL_STATE);
         }
     }
 
@@ -89,11 +110,11 @@ public class PhoneReceiver extends BroadcastReceiver {
      * 已接：phone_state=OFFHOOK;
      * 挂断：phone_state=IDLE
      */
-    public void registerReceiver(Context context, PhoneListener phoneListener) {
+    public void registerReceiver(Activity context, PhoneListener phoneListener) {
         try {
             IntentFilter filter = new IntentFilter();
             filter.addAction("android.intent.action.PHONE_STATE");
-            filter.addAction("android.intent.action.NEW_OUTGOING_CALL");
+            filter.addAction(Intent.ACTION_NEW_OUTGOING_CALL);
             filter.setPriority(Integer.MAX_VALUE);
             context.registerReceiver(this, filter);
             this.phoneListener = phoneListener;
@@ -102,7 +123,7 @@ public class PhoneReceiver extends BroadcastReceiver {
         }
     }
 
-    public void unRegisterReceiver(Context context) {
+    public void unRegisterReceiver(Activity context) {
         try {
             context.unregisterReceiver(this);
         } catch (Exception e) {
