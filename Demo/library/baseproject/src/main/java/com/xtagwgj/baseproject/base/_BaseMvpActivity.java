@@ -25,8 +25,10 @@ public abstract class _BaseMvpActivity<P extends _BaseMvpPresenter, M extends _B
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRxManager = new RxManager();
+
         doBeforeSetContentView();
         setContentView(getLayoutId());
+        doAfterSetContentView();
 
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);

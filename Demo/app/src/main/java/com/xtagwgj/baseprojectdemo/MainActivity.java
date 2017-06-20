@@ -1,33 +1,25 @@
 package com.xtagwgj.baseprojectdemo;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import com.xtagwgj.baseproject.receiver.PhoneReceiver;
-import com.xtagwgj.baseproject.utils.LogUtils;
+import com.xtagwgj.baseproject.base._BaseActivity;
 
-public class MainActivity extends AppCompatActivity implements PhoneReceiver.PhoneListener {
+public class MainActivity extends _BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-
-        PhoneReceiver phoneReceiver = new PhoneReceiver();
-        phoneReceiver.registerReceiver(this, this);
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void initView(Bundle savedInstanceState) {
+
     }
 
     @Override
-    public void onPhoneStateChanged(PhoneReceiver.CallState state, String number) {
-        LogUtils.e("MainPhone", number + "-->" + state);
+    public void initEventListener() {
+
     }
+
 }
-

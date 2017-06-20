@@ -4,11 +4,8 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
@@ -19,11 +16,9 @@ import com.xtagwgj.baseproject.constant.BaseConstants;
 import com.xtagwgj.baseproject.utils.StringUtils;
 import com.xtagwgj.baseproject.utils.ToastUtils;
 import com.xtagwgj.baseproject.view.loadingdialog.view.LoadingDialog;
-import com.xtagwgj.baseproject.widget.StatusBarCompat;
+import com.xtagwgj.baseproject.widget.StatusBarUtil;
 import com.xtagwgj.baseproject.widget.daynightmode.ChangeModeController;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.functions.Consumer;
@@ -43,16 +38,14 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
 
         doBeforeSetContentView();
         setContentView(getLayoutId());
-
-        //添加FitsSystemWindows
-        ViewGroup contentFrameLayout = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
-        View parentView = contentFrameLayout.getChildAt(0);
-        if (parentView != null) {
-            parentView.setFitsSystemWindows(true);
-        }
+        doAfterSetContentView();
 
         initView(savedInstanceState);
         initEventListener();
+    }
+
+    protected void initStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
     }
 
     /**
@@ -71,11 +64,13 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //设置着色状态栏
-        if (getTopBarShow() == TopBarShow.STATUS)
-            SetStatusBarColor();
-        else
-            SetTranslateBar();
+        //设置状态栏颜色
+        initStatusBar();
+    }
+
+    protected void doAfterSetContentView() {
+        //设置状态栏颜色
+        initStatusBar();
     }
 
     /**
@@ -112,43 +107,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
      */
     protected void initTheme() {
         ChangeModeController.setTheme(this, R.style.DayTheme, R.style.NightTheme);
-    }
-
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-    protected void SetStatusBarColor() {
-        SetStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-    }
-
-    /**
-     * 着色状态栏（4.4以上系统有效）
-     */
-    protected void SetStatusBarColor(int color) {
-        StatusBarCompat.setStatusBarColor(this, color);
-    }
-
-    /**
-     * 沉浸状态栏（4.4以上系统有效）
-     */
-    protected void SetTranslateBar() {
-        StatusBarCompat.translucentStatusBar(this);
-    }
-
-    /**
-     * 顶部bar显示的方式
-     *
-     * @return
-     */
-    protected int getTopBarShow() {
-        return TopBarShow.STATUS;
-    }
-
-    @IntDef({TopBarShow.STATUS, TopBarShow.TRANSLATE})
-    @Retention(RetentionPolicy.SOURCE)
-    public  @interface TopBarShow {
-        int STATUS = 0;
-        int TRANSLATE = 1;
     }
 
     /**

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <item name="app_name" type="string"/>
+
     <item name="mainLayout" type="id"/>
+    <item type="id" name="statusbarutil_fake_status_bar_view" />
+    <item type="id" name="statusbarutil_translucent_view" />
+
+    <item name="colorPrimary" type="color"/>
+    <item name="colorPrimaryDark" type="color"/>
+    <item name="colorAccent" type="color"/>
+
 </resources>
