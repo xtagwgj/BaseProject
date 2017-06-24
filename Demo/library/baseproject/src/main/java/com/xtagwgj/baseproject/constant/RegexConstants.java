@@ -6,6 +6,10 @@ package com.xtagwgj.baseproject.constant;
  */
 
 public class RegexConstants {
+
+    protected RegexConstants() {
+    }
+
     /**
      * 正则：手机号（简单）
      */

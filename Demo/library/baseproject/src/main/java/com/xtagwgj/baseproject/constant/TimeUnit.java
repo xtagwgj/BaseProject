@@ -10,14 +10,14 @@ import java.lang.annotation.RetentionPolicy;
  * Created by xtagwgj on 2017/6/11.
  */
 
-@IntDef({TimeUnit.MILLI, TimeUnit.SEC, TimeUnit.MIN, TimeUnit.HOUR, TimeUnit.DAY})
+@IntDef({TimeUnit.MSEC, TimeUnit.SEC, TimeUnit.MIN, TimeUnit.HOUR, TimeUnit.DAY})
 @Retention(RetentionPolicy.SOURCE)
 public @interface TimeUnit {
 
     /**
      * 秒与毫秒的倍数
      */
-    int MILLI = 1;
+    int MSEC = 1;
     /**
      * 秒与毫秒的倍数
      */

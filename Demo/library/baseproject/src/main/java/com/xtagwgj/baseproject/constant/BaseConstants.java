@@ -7,6 +7,9 @@ package com.xtagwgj.baseproject.constant;
 
 public class BaseConstants {
 
+    private BaseConstants() {
+    }
+
     //防抖的时间 单位：毫秒
     public static final int THROTTLE_TIME = 600;
 

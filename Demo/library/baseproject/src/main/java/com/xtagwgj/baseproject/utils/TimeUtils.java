@@ -305,7 +305,7 @@ public final class TimeUtils {
      * @param time1 时间字符串1
      * @param unit  单位类型
      *              <ul>
-     *              <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *              <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *              <li>{@link TimeUnit#SEC }: 秒</li>
      *              <li>{@link TimeUnit#MIN }: 分</li>
      *              <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -323,7 +323,7 @@ public final class TimeUtils {
      * @param millis 毫秒时间戳
      * @param unit   单位类型
      *               <ul>
-     *               <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *               <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *               <li>{@link TimeUnit#SEC }: 秒</li>
      *               <li>{@link TimeUnit#MIN }: 分</li>
      *               <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -342,7 +342,7 @@ public final class TimeUtils {
      * @param time1   时间字符串1
      * @param unit    单位类型
      *                <ul>
-     *                <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *                <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *                <li>{@link TimeUnit#SEC }: 秒</li>
      *                <li>{@link TimeUnit#MIN }: 分</li>
      *                <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -362,7 +362,7 @@ public final class TimeUtils {
      * @param date1 Date类型时间1
      * @param unit  单位类型
      *              <ul>
-     *              <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *              <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *              <li>{@link TimeUnit#SEC }: 秒</li>
      *              <li>{@link TimeUnit#MIN }: 分</li>
      *              <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -381,7 +381,7 @@ public final class TimeUtils {
      * @param millis1 毫秒时间戳1
      * @param unit    单位类型
      *                <ul>
-     *                <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *                <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *                <li>{@link TimeUnit#SEC }: 秒</li>
      *                <li>{@link TimeUnit#MIN }: 分</li>
      *                <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -547,7 +547,7 @@ public final class TimeUtils {
      * @param time 时间字符串
      * @param unit 单位类型
      *             <ul>
-     *             <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *             <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *             <li>{@link TimeUnit#SEC }: 秒</li>
      *             <li>{@link TimeUnit#MIN }: 分</li>
      *             <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -566,7 +566,7 @@ public final class TimeUtils {
      * @param time    时间字符串
      * @param unit    单位类型
      *                <ul>
-     *                <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *                <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *                <li>{@link TimeUnit#SEC }: 秒</li>
      *                <li>{@link TimeUnit#MIN }: 分</li>
      *                <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -585,7 +585,7 @@ public final class TimeUtils {
      * @param date Date类型时间
      * @param unit 单位类型
      *             <ul>
-     *             <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *             <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *             <li>{@link TimeUnit#SEC }: 秒</li>
      *             <li>{@link TimeUnit#MIN }: 分</li>
      *             <li>{@link TimeUnit#HOUR}: 小时</li>
@@ -603,7 +603,7 @@ public final class TimeUtils {
      * @param millis 毫秒时间戳
      * @param unit   单位类型
      *               <ul>
-     *               <li>{@link TimeUnit#MILLI}: 毫秒</li>
+     *               <li>{@link TimeUnit#MSEC}: 毫秒</li>
      *               <li>{@link TimeUnit#SEC }: 秒</li>
      *               <li>{@link TimeUnit#MIN }: 分</li>
      *               <li>{@link TimeUnit#HOUR}: 小时</li>

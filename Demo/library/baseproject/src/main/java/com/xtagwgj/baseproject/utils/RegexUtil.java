@@ -19,6 +19,10 @@ import java.util.regex.Pattern;
  */
 public class RegexUtil extends RegexConstants {
 
+    private RegexUtil() {
+        super();
+    }
+
     public static boolean valid(String regex, String text) {
         return !StringUtils.isEmpty(text) && Pattern.matches(regex, text);
     }
