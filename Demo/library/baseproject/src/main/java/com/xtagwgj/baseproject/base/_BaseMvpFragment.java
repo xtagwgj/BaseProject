@@ -2,6 +2,7 @@ package com.xtagwgj.baseproject.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public abstract class _BaseMvpFragment<P extends _BaseMvpPresenter, M extends _B
         ToastUtils.showShortToast(getActivity(), msg);
     }
 
-    protected void showToast(int strId) {
+    protected void showToast(@StringRes int strId) {
         ToastUtils.showShortToast(getActivity(), getString(strId));
     }
 

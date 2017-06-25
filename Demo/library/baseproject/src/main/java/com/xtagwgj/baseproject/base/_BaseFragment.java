@@ -3,6 +3,7 @@ package com.xtagwgj.baseproject.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -48,10 +49,7 @@ public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.s
     //点击事件
     protected abstract void initEventListener();
 
-    protected void clickEvent(View view, Consumer consumer) {
-        if (view == null)
-            return;
-
+    protected void clickEvent(@NonNull View view,@NonNull Consumer consumer) {
         RxView.clicks(view)
                 .throttleFirst(BaseConstants.THROTTLE_TIME, TimeUnit.MILLISECONDS)
                 .compose(this.bindToLifecycle())

@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
-import com.xtagwgj.baseproject.base.AppManager;
 import com.xtagwgj.baseproject.R;
+import com.xtagwgj.baseproject.base.AppManager;
 import com.xtagwgj.baseproject.constant.BaseConstants;
 import com.xtagwgj.baseproject.utils.StringUtils;
 
@@ -52,7 +52,7 @@ public class TitleLayout extends RelativeLayout {
     private int moreRes = R.mipmap.btn_add_new;
 
     //标题的背景色
-    private int bgColor = R.color.colorPrimaryDark;
+    private int bgColorRes = R.color.colorPrimaryDark;
 
     public TitleLayout(Context context) {
         this(context, null);
@@ -83,9 +83,9 @@ public class TitleLayout extends RelativeLayout {
             backRes = array.getResourceId(R.styleable.TitleLayout_arrowImgRes, backRes);
             showMoreImageView = array.getBoolean(R.styleable.TitleLayout_rightImgShow, false);
             moreRes = array.getResourceId(R.styleable.TitleLayout_rightImgRes, moreRes);
-            bgColor = array.getColor(R.styleable.TitleLayout_bgColorRes, getResources().getColor(bgColor));
+            int bgColorInt = array.getColor(R.styleable.TitleLayout_bgColorRes, getResources().getColor(bgColorRes));
 
-            titleLayout.setBackgroundColor(bgColor);
+            titleLayout.setBackgroundColor(bgColorInt);
 
             String titleName = array.getString(R.styleable.TitleLayout_titleName);
             setTitleText(StringUtils.null2Length0(titleName));

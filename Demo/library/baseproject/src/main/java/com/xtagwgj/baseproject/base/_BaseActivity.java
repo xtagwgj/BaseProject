@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -119,21 +121,18 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
             inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
-    protected void clickEvent(View view, Consumer consumer) {
-        if (view == null || consumer == null)
-            return;
-
+    protected void clickEvent(@NonNull View view,@NonNull Consumer consumer) {
         RxView.clicks(view)
                 .throttleFirst(BaseConstants.THROTTLE_TIME, TimeUnit.MILLISECONDS)
                 .compose(this.bindToLifecycle())
                 .subscribe(consumer);
     }
 
-    protected void showLoadingDialog(int loadingTextRes, int successTextRes) {
+    protected void showLoadingDialog(@StringRes int loadingTextRes, @StringRes int successTextRes) {
         showLoadingDialog(getString(loadingTextRes), getString(successTextRes));
     }
 
-    protected void showLoadingDialog(String loadingText, String successText) {
+    protected void showLoadingDialog(@NonNull String loadingText, @NonNull String successText) {
         showLoadingDialog(loadingText, successText, false);
     }
 
@@ -184,12 +183,12 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         });
     }
 
-    protected void showToast(int resId) {
+    protected void showToast(@StringRes int resId) {
 //        Snackbar.make(getCurrentFocus(), msg, Snackbar.LENGTH_SHORT).show();
         ToastUtils.showShortToast(this, getString(resId));
     }
 
-    protected void showToast(String msg) {
+    protected void showToast(@NonNull String msg) {
         ToastUtils.showShortToast(this, StringUtils.null2Length0(msg));
     }
 
