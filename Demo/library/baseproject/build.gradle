@@ -19,9 +19,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "com.android.support:appcompat-v7:${libs.appcompat_v7}"
-    compile "com.android.support:recyclerview-v7:${libs.recyclerview_v7}"
-    compile "com.android.support:design:${libs.appcompat_v7}"
+    compile "com.android.support:appcompat-v7:${libs.support_version}"
+    compile "com.android.support:recyclerview-v7:${libs.support_version}"
+    compile "com.android.support:design:${libs.support_version}"
 //    compile "com.android.support:multidex:${libs.multidex}"//分包
 
     compile "com.jakewharton.rxbinding2:rxbinding:${libs.rxbinding2}"

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
+import com.xtagwgj.baseproject.view.LoadingLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,9 @@ public class MainActivity extends _BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        LoadingLayout viewById = (LoadingLayout) findViewById(R.id.loadingLayout);
 
+        viewById.setStatus(LoadingLayout.Empty);
     }
 
     @Override

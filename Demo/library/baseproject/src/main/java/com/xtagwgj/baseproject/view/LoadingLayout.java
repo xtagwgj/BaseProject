@@ -99,7 +99,8 @@ public class LoadingLayout extends FrameLayout {
         }
         contentView = this.getChildAt(0);
         if (!isFirstVisible) {
-            contentView.setVisibility(View.GONE);
+            if (contentView != null)
+                contentView.setVisibility(View.GONE);
         }
         build();
     }
@@ -203,8 +204,8 @@ public class LoadingLayout extends FrameLayout {
 
         switch (status) {
             case Success:
-
-                contentView.setVisibility(View.VISIBLE);
+                if (contentView != null)
+                    contentView.setVisibility(View.VISIBLE);
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.GONE);
@@ -217,8 +218,8 @@ public class LoadingLayout extends FrameLayout {
                 break;
 
             case Loading:
-
-                contentView.setVisibility(View.GONE);
+                if (contentView != null)
+                    contentView.setVisibility(View.GONE);
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.GONE);
@@ -230,8 +231,8 @@ public class LoadingLayout extends FrameLayout {
                 break;
 
             case Empty:
-
-                contentView.setVisibility(View.GONE);
+                if (contentView != null)
+                    contentView.setVisibility(View.GONE);
                 emptyPage.setVisibility(View.VISIBLE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.GONE);
@@ -243,8 +244,8 @@ public class LoadingLayout extends FrameLayout {
                 break;
 
             case Error:
-
-                contentView.setVisibility(View.GONE);
+                if (contentView != null)
+                    contentView.setVisibility(View.GONE);
                 loadingPage.setVisibility(View.GONE);
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.VISIBLE);
@@ -257,8 +258,8 @@ public class LoadingLayout extends FrameLayout {
                 break;
 
             case No_Network:
-
-                contentView.setVisibility(View.GONE);
+                if (contentView != null)
+                    contentView.setVisibility(View.GONE);
                 loadingPage.setVisibility(View.GONE);
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.GONE);
