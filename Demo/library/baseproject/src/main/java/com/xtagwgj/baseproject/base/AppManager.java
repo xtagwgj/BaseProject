@@ -13,6 +13,8 @@ import java.util.Stack;
  */
 
 public class AppManager {
+    public static final String TAG = "AppManager";
+
     private static Stack<Activity> activityStack;
     private volatile static AppManager instance;
 
@@ -42,7 +44,7 @@ public class AppManager {
         if (activityStack == null) {
             activityStack = new Stack<>();
         }
-        Log.e("添加指定的Activity", activity.getLocalClassName());
+        Log.e(TAG, "添加指定的Activity" + activity.getLocalClassName());
         activityStack.add(activity);
     }
 
@@ -51,10 +53,8 @@ public class AppManager {
      */
     public Activity currentActivity() {
         try {
-            Activity activity = activityStack.lastElement();
-            return activity;
+            return activityStack.lastElement();
         } catch (Exception e) {
-//            e.printStackTrace();
             return null;
         }
     }
@@ -82,7 +82,7 @@ public class AppManager {
      * 结束指定的Activity
      */
     public void finishActivity(Activity activity) {
-        Log.e("结束指定的Activity", activity.getLocalClassName());
+        Log.e(TAG, "结束指定的Activity" + activity);
         if (activity != null) {
             activityStack.remove(activity);
             activity.finish();
@@ -131,9 +131,6 @@ public class AppManager {
 
     /**
      * 是否已经打开指定的activity
-     *
-     * @param cls
-     * @return
      */
     public boolean isOpenActivity(Class<?> cls) {
         if (activityStack != null) {
@@ -162,8 +159,6 @@ public class AppManager {
 
     /**
      * 返回到指定的activity
-     *
-     * @param cls
      */
     public void returnToActivity(Class<?> cls) {
         if (getActivity(cls) != null)
@@ -183,8 +178,8 @@ public class AppManager {
             finishAllActivity();
             ActivityManager activityMgr = (ActivityManager) context
                     .getSystemService(Context.ACTIVITY_SERVICE);
-            activityMgr.restartPackage(context.getPackageName());
-        } catch (Exception e) {
+            activityMgr.killBackgroundProcesses(context.getPackageName());
+        } catch (Exception ignored) {
 
         } finally {
             // 注意，如果您有后台程序运行，请不要支持此句子
@@ -195,7 +190,7 @@ public class AppManager {
     }
 
 
-    public int activityStackSize() {
+    private int activityStackSize() {
         return activityStack == null ? 0 : activityStack.size();
     }
 }

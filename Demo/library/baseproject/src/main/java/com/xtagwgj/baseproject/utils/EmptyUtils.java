@@ -1,9 +1,7 @@
 package com.xtagwgj.baseproject.utils;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 检查为空的工具类
@@ -12,10 +10,6 @@ import java.util.Set;
 
 public class EmptyUtils {
     private EmptyUtils() {
-    }
-
-    public static boolean isEmpty(List list) {
-        return list == null || list.isEmpty();
     }
 
     public static boolean isEmpty(Collection collection) {
@@ -28,14 +22,6 @@ public class EmptyUtils {
 
     public static boolean isEmpty(Map map) {
         return map == null || map.isEmpty();
-    }
-
-    public static boolean isEmpty(String s) {
-        return s == null || s.trim().length() == 0;
-    }
-
-    public static boolean isEmpty(Set set) {
-        return set == null || set.isEmpty();
     }
 
 }

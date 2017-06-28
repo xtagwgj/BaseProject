@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.xtagwgj.baseproject.utils.EmptyUtils;
 import com.xtagwgj.baseproject.utils.StringUtils;
 import com.xtagwgj.baseproject.utils.TUtil;
 
@@ -51,11 +52,11 @@ public abstract class _BaseMvpActivity<P extends _BaseMvpPresenter, M extends _B
     }
 
     protected boolean isEmpty(String str) {
-        return StringUtils.isEmpty(str);
+        return EmptyUtils.isEmpty(str);
     }
 
     protected boolean isEmpty(List list) {
-        return list == null || list.size() == 0;
+        return EmptyUtils.isEmpty(list);
     }
 
     @Override

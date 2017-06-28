@@ -56,7 +56,6 @@ ext {
             butterknife     : "8.4.0",
             MPAndroidChart  : "v3.0.2",
             crashreport     : "+",
-            beanutils       : "1.9.3",
 
     ]
 }

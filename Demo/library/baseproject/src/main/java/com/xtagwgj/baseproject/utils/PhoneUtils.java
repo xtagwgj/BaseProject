@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.SystemClock;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 
@@ -225,7 +224,6 @@ public class PhoneUtils {
      * @return 联系人链表
      */
     public static List<HashMap<String, String>> getAllContactInfo(Context mContext) {
-        SystemClock.sleep(3000);
         ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         // 1.获取内容解析者
         ContentResolver resolver = mContext.getContentResolver();
