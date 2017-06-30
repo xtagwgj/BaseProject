@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BaseProjectDemo</string>
+
+    <string name="description">That&amp;apos;s the image to draw the progressbar around.</string>
 </resources>

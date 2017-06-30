@@ -3,9 +3,11 @@ package com.xtagwgj.baseprojectdemo;
 import android.os.Bundle;
 import android.view.View;
 
-import com.xtagwgj.baseproject.base.AppManager;
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
+import com.xtagwgj.baseproject.utils.LogUtils;
+import com.xtagwgj.baseprojectdemo.fabprogress.ProgressFabButton;
+import com.xtagwgj.baseprojectdemo.fabprogress.ProgressView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +23,62 @@ public class MainActivity extends _BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        findViewById(R.id.loadingLayout).setOnClickListener(new View.OnClickListener() {
+        final ProgressFabButton fab = (ProgressFabButton) findViewById(R.id.fab);
+
+        fab.setCompletedListener(new ProgressView.OnProgressListener() {
             @Override
-            public void onClick(View v) {
-                AppManager.getAppManager().AppExit(MainActivity.this, true);
+            public void onProgressStart() {
+                LogUtils.e("onProgressStart");
+            }
+
+            @Override
+            public void onProgressCancel() {
+                LogUtils.e("onProgressCancel");
+            }
+
+            @Override
+            public void onProgressCompleted() {
+                LogUtils.e("onProgressCompleted");
             }
         });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fab.startAnim(1, 100, 2000, true);
+            }
+        });
+
+        final ProgressView progressView = (ProgressView) findViewById(R.id.progress);
+
+        progressView.setProgressListener(new ProgressView.OnProgressListener() {
+            @Override
+            public void onProgressStart() {
+                LogUtils.e("onProgressStart");
+            }
+
+            @Override
+            public void onProgressCancel() {
+                LogUtils.e("onProgressCancel");
+            }
+
+            @Override
+            public void onProgressCompleted() {
+                LogUtils.e("onProgressCompleted");
+            }
+        });
+
+        progressView.mTotalProgress = 100;
+
+        progressView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressView.mCurrentProgress = 0;
+                progressView.setAnimTime(10000);
+                progressView.setCurrentProgress(100, true);
+            }
+        });
+
 
     }
 
