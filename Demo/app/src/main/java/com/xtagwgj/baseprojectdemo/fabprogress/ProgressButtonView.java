@@ -350,6 +350,73 @@ public class ProgressButtonView extends View {
      * 画垂直的进度条
      */
     private void drawVerticalProgress(Canvas canvas) {
+        float currentAngel = mCurrentProgress * 360 / mTotalProgress;
+
+        //顶部1／4圆
+        if (currentAngel < circleAngel / 2) {
+
+            canvas.drawArc(progressCircleBounds,
+                    -90,
+                    currentAngel / circleAngel * 90,
+                    true, mProgressPaint);
+
+        } else {
+            canvas.drawArc(progressCircleBounds,
+                    -90,
+                    90,
+                    true, mProgressPaint);
+        }
+
+        //未超过顶部1／4圆
+        if (currentAngel <= circleAngel / 2)
+            return;
+
+        //右部直线
+        if (currentAngel < lineAngel + circleAngel / 2) {
+            canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + (currentAngel - circleAngel / 2) / circleAngel * longLineHeight, mProgressPaint);
+        } else {
+            canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + longLineHeight, mProgressPaint);
+        }
+
+        //未超过右部直线
+        if (currentAngel <= lineAngel + circleAngel / 2)
+            return;
+
+        //底部圆弧
+        if (currentAngel < 360 - lineAngel - circleAngel / 2) {
+            canvas.drawArc(otherCircleProgressBounds,
+                    0,
+                    (currentAngel - lineAngel - circleAngel / 2) / circleAngel * 180,
+                    true, mProgressPaint);
+
+        } else {
+            canvas.drawArc(otherCircleProgressBounds,
+                    0,
+                    180,
+                    true, mProgressPaint);
+        }
+
+        //未超过底部圆弧
+        if (currentAngel <= 360 - lineAngel - circleAngel / 2)
+            return;
+
+        //左部直线
+        if (currentAngel < 360 - circleAngel / 2) {
+            canvas.drawLine(0, roundRadius + longLineHeight, 0, longLineHeight + roundRadius - (currentAngel - lineAngel - circleAngel / 2 * 3) / lineAngel * longLineHeight, mProgressPaint);
+
+        } else {
+            canvas.drawLine(0, roundRadius + longLineHeight, 0, roundRadius, mProgressPaint);
+        }
+
+        //未超过左部直线
+        if (currentAngel <= 360 - circleAngel / 2)
+            return;
+
+
+        canvas.drawArc(progressCircleBounds,
+                180,
+                90 - (360 - currentAngel) / circleAngel * 90,
+                true, mProgressPaint);
 
 
     }

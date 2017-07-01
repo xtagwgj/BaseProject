@@ -28,8 +28,8 @@
 
     <com.xtagwgj.baseprojectdemo.fabprogress.ProgressButtonView
         android:id="@+id/progressButton"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
+        android:layout_width="48dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/progress"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
