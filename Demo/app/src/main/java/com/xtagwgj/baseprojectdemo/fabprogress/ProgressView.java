@@ -180,8 +180,13 @@ public class ProgressView extends View {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     mCurrentProgress = (Float) animation.getAnimatedValue();
                     ProgressView.this.invalidate();
-                    if (mTargetProgress == mCurrentProgress && mListener != null)
-                        mListener.onProgressCompleted();
+
+                    if (mListener != null) {
+                        if (mTargetProgress == mCurrentProgress)
+                            mListener.onProgressCompleted();
+                        else
+                            mListener.onProgressUpdate(mCurrentProgress / mTotalProgress);
+                    }
                 }
             });
             valueAnim.addListener(new Animator.AnimatorListener() {
@@ -266,6 +271,8 @@ public class ProgressView extends View {
 
     public interface OnProgressListener {
         void onProgressStart();
+
+        void onProgressUpdate(float progress);
 
         void onProgressCancel();
 

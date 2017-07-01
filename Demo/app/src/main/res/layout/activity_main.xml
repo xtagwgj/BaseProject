@@ -22,8 +22,16 @@
 
     <com.xtagwgj.baseprojectdemo.fabprogress.ProgressView
         android:id="@+id/progress"
-        android:layout_centerInParent="true"
         android:layout_width="64dp"
-        android:layout_height="64dp" />
+        android:layout_height="64dp"
+        android:layout_centerInParent="true" />
+
+    <com.xtagwgj.baseprojectdemo.fabprogress.ProgressButtonView
+        android:id="@+id/progressButton"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/progress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

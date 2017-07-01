@@ -6,6 +6,7 @@ import android.view.View;
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
 import com.xtagwgj.baseproject.utils.LogUtils;
+import com.xtagwgj.baseprojectdemo.fabprogress.ProgressButtonView;
 import com.xtagwgj.baseprojectdemo.fabprogress.ProgressFabButton;
 import com.xtagwgj.baseprojectdemo.fabprogress.ProgressView;
 
@@ -32,6 +33,10 @@ public class MainActivity extends _BaseActivity {
             }
 
             @Override
+            public void onProgressUpdate(float progress) {
+            }
+
+            @Override
             public void onProgressCancel() {
                 LogUtils.e("onProgressCancel");
             }
@@ -49,12 +54,16 @@ public class MainActivity extends _BaseActivity {
             }
         });
 
-        final ProgressView progressView = (ProgressView) findViewById(R.id.progress);
+        final ProgressButtonView progressView = (ProgressButtonView) findViewById(R.id.progressButton);
 
-        progressView.setProgressListener(new ProgressView.OnProgressListener() {
+        progressView.setProgressListener(new ProgressButtonView.OnProgressListener() {
             @Override
             public void onProgressStart() {
                 LogUtils.e("onProgressStart");
+            }
+
+            @Override
+            public void onProgressUpdate(float progress) {
             }
 
             @Override
@@ -78,6 +87,7 @@ public class MainActivity extends _BaseActivity {
                 progressView.setCurrentProgress(100, true);
             }
         });
+
 
 
     }
