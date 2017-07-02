@@ -6,9 +6,9 @@ import android.view.View;
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
 import com.xtagwgj.baseproject.utils.LogUtils;
-import com.xtagwgj.baseprojectdemo.fabprogress.ProgressButtonView;
 import com.xtagwgj.baseprojectdemo.fabprogress.ProgressFabButton;
 import com.xtagwgj.baseprojectdemo.fabprogress.ProgressView;
+import com.xtagwgj.baseprojectdemo.timerview.TimerProgressView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,9 +54,9 @@ public class MainActivity extends _BaseActivity {
             }
         });
 
-        final ProgressButtonView progressView = (ProgressButtonView) findViewById(R.id.progressButton);
+        final TimerProgressView progressView = (TimerProgressView) findViewById(R.id.progressButton);
 
-        progressView.setProgressListener(new ProgressButtonView.OnProgressListener() {
+        progressView.setProgressListener(new TimerProgressView.OnProgressListener() {
             @Override
             public void onProgressStart() {
                 LogUtils.e("onProgressStart");
@@ -77,18 +77,16 @@ public class MainActivity extends _BaseActivity {
             }
         });
 
-        progressView.mTotalProgress = 100;
-
-        progressView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressView.mCurrentProgress = 0;
-                progressView.setAnimTime(10000);
-                progressView.setCurrentProgress(100, true);
-            }
-        });
-
-
+//        progressView.mTotalProgress = 100;
+//
+//        progressView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                progressView.mCurrentProgress = 0;
+//                progressView.setAnimTime(10000);
+//                progressView.setCurrentProgress(100, true);
+//            }
+//        });
 
     }
 

@@ -1,4 +1,4 @@
-package com.xtagwgj.baseprojectdemo.fabprogress;
+package com.xtagwgj.baseprojectdemo.timerview;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -18,38 +18,36 @@ import com.xtagwgj.baseproject.utils.LogUtils;
 import static com.xtagwgj.baseprojectdemo.fabprogress.ThemeUtils.getThemePrimaryColor;
 
 /**
- * 带进度条的按钮
+ * 带时间限制的进度条视图
+ * Created by xtagwgj on 2017/7/1
  */
-public class ProgressButtonView extends View {
+public class TimerProgressView extends View {
 
-    public static final String TAG = ProgressButtonView.class.getSimpleName();
+    public static final String TAG = TimerProgressView.class.getSimpleName();
 
     //最开始的 最小的进度数
-    public float mStartingProgress;
+    private float mStartingProgress;
 
-    //中的进度数
-    public float mTotalProgress;
+    //总的进度数
+    private float mTotalProgress;
 
     //当前的进度数
-    public float mCurrentProgress;
+    private float mCurrentProgress;
 
     //当前要运动到的进度数
     private float mTargetProgress;
 
-    //步长
-    public float mStepSize;
-
     //进度条的颜色
-    public int mProgressColor;
+    private int mProgressColor;
 
     //进度条里面的分割线的颜色
-    public int mSplitColor;
+    private int mSplitColor;
 
     //虚拟的路径颜色
-    public int mPathLineColor;
+    private int mPathLineColor;
 
     //动画的时间
-    public int mAnimationDuration;
+    private int mAnimationDuration;
 
     //动画是否正在执行
     private boolean isAnimating;
@@ -102,22 +100,28 @@ public class ProgressButtonView extends View {
     //圆的角度
     private float circleAngel;
 
+    //是否显示虚拟的路径
+    private boolean showVirtualPath;
+
     private OnProgressListener mListener;
 
-    public ProgressButtonView(Context context, AttributeSet attrs) {
+    public TimerProgressView(Context context) {
+        this(context, null);
+    }
+
+    public TimerProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         // Every attribute is initialized with a default value
         mProgressColor = getThemePrimaryColor(context);
-        mSplitColor = Color.BLACK;
-        mPathLineColor = Color.RED;
+        mSplitColor = Color.parseColor("#666666");
+        mPathLineColor = Color.parseColor("#dcdcdc");
 
         mStartingProgress = 0;
         mCurrentProgress = 0;
         mTargetProgress = 0;
         mProgressSize = 8;
         mTotalProgress = 100;
-        mStepSize = 10;
         mAnimationDuration = 640;
 
         if (isInEditMode()) {
@@ -144,6 +148,7 @@ public class ProgressButtonView extends View {
         mLinePathPaint.setColor(mPathLineColor);
 
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -221,8 +226,9 @@ public class ProgressButtonView extends View {
             }
 
             LogUtils.e(TAG, "lineAngel=" + lineAngel);
-
         }
+
+
     }
 
     /**
@@ -252,9 +258,9 @@ public class ProgressButtonView extends View {
             drawCircleProgress(canvas);
         } else {
 
-            //画虚拟的进度条的背景
-            canvas.drawRoundRect(roundProgressBounds, roundRadius, roundRadius, mLinePathPaint);
-
+            if (showVirtualPath)
+                //画虚拟的进度条的背景
+                canvas.drawRoundRect(roundProgressBounds, roundRadius, roundRadius, mLinePathPaint);
 
             if (isHorizontal) {
                 drawHorizontalProgress(canvas);
@@ -263,7 +269,7 @@ public class ProgressButtonView extends View {
             }
 
             //画分割线
-//            canvas.drawRoundRect(roundSplitBounds, roundRadius - mProgressSize, roundRadius - mProgressSize, mSplitPaint);
+            canvas.drawRoundRect(roundSplitBounds, roundRadius - mProgressSize, roundRadius - mProgressSize, mSplitPaint);
         }
 
     }
@@ -289,7 +295,7 @@ public class ProgressButtonView extends View {
             return;
 
         //画右方圆弧
-        if (currentAngel < 180 - lineAngel / 2) {
+        if (currentAngel <= 180 - lineAngel / 2) {
 
             canvas.drawArc(otherCircleProgressBounds,
                     -90,
@@ -311,8 +317,8 @@ public class ProgressButtonView extends View {
 
         //画底部线段
         if (currentAngel < 360 - lineAngel / 2 - circleAngel) {
-            canvas.drawLine(maxX, roundRadius * 2, maxX - (currentAngel - circleAngel - lineAngel / 2) / lineAngel * longLineHeight, roundRadius * 2, mProgressPaint);
-
+            canvas.drawLine(maxX, roundRadius * 2,
+                    maxX - (currentAngel - circleAngel - lineAngel / 2) / lineAngel * longLineHeight, roundRadius * 2, mProgressPaint);
         } else {
             canvas.drawLine(maxX, roundRadius * 2, roundRadius, roundRadius * 2, mProgressPaint);
         }
@@ -323,7 +329,7 @@ public class ProgressButtonView extends View {
         }
 
         //画左方的圆弧
-        if (currentAngel < 360 - lineAngel / 2) {
+        if (currentAngel <= 360 - lineAngel / 2) {
             canvas.drawArc(progressCircleBounds,
                     90,
                     (currentAngel - lineAngel / 2 - 180) / circleAngel * 180,
@@ -354,10 +360,9 @@ public class ProgressButtonView extends View {
 
         //顶部1／4圆
         if (currentAngel < circleAngel / 2) {
-
             canvas.drawArc(progressCircleBounds,
                     -90,
-                    currentAngel / circleAngel * 90,
+                    currentAngel / circleAngel * 180,
                     true, mProgressPaint);
 
         } else {
@@ -373,7 +378,7 @@ public class ProgressButtonView extends View {
 
         //右部直线
         if (currentAngel < lineAngel + circleAngel / 2) {
-            canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + (currentAngel - circleAngel / 2) / circleAngel * longLineHeight, mProgressPaint);
+            canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + (currentAngel - circleAngel / 2) / lineAngel * longLineHeight, mProgressPaint);
         } else {
             canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + longLineHeight, mProgressPaint);
         }
@@ -402,7 +407,8 @@ public class ProgressButtonView extends View {
 
         //左部直线
         if (currentAngel < 360 - circleAngel / 2) {
-            canvas.drawLine(0, roundRadius + longLineHeight, 0, longLineHeight + roundRadius - (currentAngel - lineAngel - circleAngel / 2 * 3) / lineAngel * longLineHeight, mProgressPaint);
+            canvas.drawLine(0, roundRadius + longLineHeight, 0,
+                    longLineHeight + roundRadius - (currentAngel - lineAngel - circleAngel / 2 * 3) / lineAngel * longLineHeight, mProgressPaint);
 
         } else {
             canvas.drawLine(0, roundRadius + longLineHeight, 0, roundRadius, mProgressPaint);
@@ -413,12 +419,11 @@ public class ProgressButtonView extends View {
             return;
 
 
+        //画顶部剩下的半圆
         canvas.drawArc(progressCircleBounds,
                 180,
-                90 - (360 - currentAngel) / circleAngel * 90,
+                90 - (360 - currentAngel) / circleAngel * 180,
                 true, mProgressPaint);
-
-
     }
 
     /**
@@ -426,11 +431,12 @@ public class ProgressButtonView extends View {
      */
     private void drawCircleProgress(Canvas canvas) {
 
-        //画虚拟的进度条的背景
-        canvas.drawArc(progressCircleBounds,
-                0,
-                360,
-                true, mLinePathPaint);
+        if (showVirtualPath)
+            //画虚拟的进度条的背景
+            canvas.drawArc(progressCircleBounds,
+                    0,
+                    360,
+                    true, mLinePathPaint);
 
         //画进度条，从-90度开始画
         canvas.drawArc(progressCircleBounds,
@@ -445,9 +451,38 @@ public class ProgressButtonView extends View {
                 true, mSplitPaint);
     }
 
-    /*
-    * Getters and Setters
-    * */
+
+    /**
+     * 不需要重绘视图的初始化
+     *
+     * @param minProgress   最小进度
+     * @param totalProgress 最大进度
+     * @param progressTime  时间 毫秒
+     */
+    public void initProgressView(float minProgress, float totalProgress, int progressTime) {
+        setmStartingProgress(minProgress);
+        setmTotalProgress(totalProgress);
+        setAnimTime(progressTime);
+    }
+
+    /**
+     * 要重绘视图的初始化
+     *
+     * @param progressSizePx   进度条大小
+     * @param progressColor    进度条颜色
+     * @param splitColor       分割线颜色
+     * @param virtualPathColor 虚拟路径颜色
+     * @param showPath         是否显示虚拟路径
+     */
+    public void initProgressInvalid(int progressSizePx, int progressColor,
+                                    int splitColor, int virtualPathColor, boolean showPath) {
+        this.mProgressSize = progressSizePx;
+        this.mProgressColor = progressColor;
+        this.mSplitColor = splitColor;
+        this.mPathLineColor = virtualPathColor;
+        this.showVirtualPath = showPath;
+        invalidate();
+    }
 
     /**
      * 设置动画的时间
@@ -486,12 +521,13 @@ public class ProgressButtonView extends View {
                 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                 public void onAnimationUpdate(ValueAnimator animation) {
                     mCurrentProgress = (Float) animation.getAnimatedValue();
-                    ProgressButtonView.this.invalidate();
+                    TimerProgressView.this.invalidate();
 
                     if (mListener != null) {
-                        if (mTargetProgress == mCurrentProgress)
+                        if (mTargetProgress == mCurrentProgress) {
                             mListener.onProgressCompleted();
-                        else
+                            mCurrentProgress = mStartingProgress;
+                        } else
                             mListener.onProgressUpdate(mCurrentProgress / mTotalProgress);
                     }
                 }
@@ -532,11 +568,6 @@ public class ProgressButtonView extends View {
 
     }
 
-    public void next(boolean animate) {
-        setCurrentProgress(mCurrentProgress + mStepSize, animate);
-    }
-
-
     /**
      * 设置进度条的颜色
      *
@@ -569,9 +600,22 @@ public class ProgressButtonView extends View {
         invalidate();
     }
 
+    public void setmPathLineColor(int mPathLineColor) {
+        this.mPathLineColor = mPathLineColor;
+        invalidate();
+    }
+
+    public void setmStartingProgress(float mStartingProgress) {
+        this.mStartingProgress = mStartingProgress;
+    }
+
+    public void setmTotalProgress(float mTotalProgress) {
+        this.mTotalProgress = mTotalProgress;
+    }
+
     /*
-    * Interface callbacks
-    * */
+            * Interface callbacks
+            * */
     public void setProgressListener(OnProgressListener mListener) {
         this.mListener = mListener;
     }

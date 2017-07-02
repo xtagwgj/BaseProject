@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
     <com.xtagwgj.baseprojectdemo.fabprogress.ProgressFabButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -26,12 +25,18 @@
         android:layout_height="64dp"
         android:layout_centerInParent="true" />
 
-    <com.xtagwgj.baseprojectdemo.fabprogress.ProgressButtonView
+    <com.xtagwgj.baseprojectdemo.timerview.TimerProgressView
         android:id="@+id/progressButton"
-        android:layout_width="48dp"
-        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
         android:layout_below="@+id/progress"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
+
+
+    <com.xtagwgj.baseprojectdemo.timerview.TimerButton
+        android:layout_width="80dp"
+        android:layout_height="180dp"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
