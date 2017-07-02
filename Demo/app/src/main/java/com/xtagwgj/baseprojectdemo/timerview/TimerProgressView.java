@@ -9,13 +9,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Build;
+import android.support.annotation.FloatRange;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.xtagwgj.baseproject.utils.LogUtils;
-
-import static com.xtagwgj.baseprojectdemo.fabprogress.ThemeUtils.getThemePrimaryColor;
+import static com.xtagwgj.baseprojectdemo.timerview.ThemeUtils.getThemePrimaryColor;
 
 /**
  * 带时间限制的进度条视图
@@ -36,15 +35,6 @@ public class TimerProgressView extends View {
 
     //当前要运动到的进度数
     private float mTargetProgress;
-
-    //进度条的颜色
-    private int mProgressColor;
-
-    //进度条里面的分割线的颜色
-    private int mSplitColor;
-
-    //虚拟的路径颜色
-    private int mPathLineColor;
 
     //动画的时间
     private int mAnimationDuration;
@@ -112,11 +102,6 @@ public class TimerProgressView extends View {
     public TimerProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        // Every attribute is initialized with a default value
-        mProgressColor = getThemePrimaryColor(context);
-        mSplitColor = Color.parseColor("#666666");
-        mPathLineColor = Color.parseColor("#dcdcdc");
-
         mStartingProgress = 0;
         mCurrentProgress = 0;
         mTargetProgress = 0;
@@ -126,7 +111,7 @@ public class TimerProgressView extends View {
 
         if (isInEditMode()) {
             mCurrentProgress = 20;
-            mTargetProgress = 60;
+            mTargetProgress = 100;
         }
 
         followProgress = false;
@@ -134,18 +119,19 @@ public class TimerProgressView extends View {
         mProgressPaint = new Paint();
         mProgressPaint.setAntiAlias(true);
         mProgressPaint.setStyle(Paint.Style.FILL);
-        mProgressPaint.setColor(mProgressColor);
+        mProgressPaint.setColor(getThemePrimaryColor(context));
         mProgressPaint.setStrokeWidth(mProgressSize * 2);
 
         mSplitPaint = new Paint();
         mSplitPaint.setAntiAlias(true);
         mSplitPaint.setStyle(Paint.Style.FILL);
-        mSplitPaint.setColor(mSplitColor);
+        mSplitPaint.setColor(Color.parseColor("#666666"));
 
         mLinePathPaint = new Paint();
         mLinePathPaint.setAntiAlias(true);
         mLinePathPaint.setStyle(Paint.Style.FILL);
-        mLinePathPaint.setColor(mPathLineColor);
+        mLinePathPaint.setColor(Color.parseColor("#dcdcdc"));
+        mProgressPaint.setStrokeWidth(mProgressSize * 2);
 
     }
 
@@ -156,9 +142,6 @@ public class TimerProgressView extends View {
 
         int widthSizePx = MeasureSpec.getSize(widthMeasureSpec);
         int heightSizePx = MeasureSpec.getSize(heightMeasureSpec);
-
-        LogUtils.e(TAG, "height=" + heightSizePx);
-        LogUtils.e(TAG, "width=" + widthSizePx);
 
         isCircle = widthSizePx == heightSizePx;
 
@@ -225,7 +208,6 @@ public class TimerProgressView extends View {
                 lineAngel = 180 - circleAngel;
             }
 
-            LogUtils.e(TAG, "lineAngel=" + lineAngel);
         }
 
 
@@ -269,7 +251,8 @@ public class TimerProgressView extends View {
             }
 
             //画分割线
-            canvas.drawRoundRect(roundSplitBounds, roundRadius - mProgressSize, roundRadius - mProgressSize, mSplitPaint);
+            canvas.drawRoundRect(roundSplitBounds,
+                    roundRadius - mProgressSize, roundRadius - mProgressSize, mSplitPaint);
         }
 
     }
@@ -285,9 +268,12 @@ public class TimerProgressView extends View {
 
         //画顶部右边的线段
         if (currentAngel < lineAngel / 2) {
-            canvas.drawLine(minX, 0, minX + currentAngel / lineAngel * longLineHeight, 0, mProgressPaint);
+            canvas.drawRect(minX, 0,
+                    minX + currentAngel / lineAngel * longLineHeight, roundRadius, mProgressPaint);
+
         } else {
-            canvas.drawLine(minX, 0, minX + longLineHeight / 2, 0, mProgressPaint);
+            canvas.drawRect(minX, 0, minX + longLineHeight / 2, roundRadius, mProgressPaint);
+
         }
 
         //未超过顶部右边的线段
@@ -317,10 +303,11 @@ public class TimerProgressView extends View {
 
         //画底部线段
         if (currentAngel < 360 - lineAngel / 2 - circleAngel) {
-            canvas.drawLine(maxX, roundRadius * 2,
-                    maxX - (currentAngel - circleAngel - lineAngel / 2) / lineAngel * longLineHeight, roundRadius * 2, mProgressPaint);
+            canvas.drawRect(maxX, roundRadius * 2,
+                    maxX - (currentAngel - circleAngel - lineAngel / 2) / lineAngel * longLineHeight,
+                    roundRadius, mProgressPaint);
         } else {
-            canvas.drawLine(maxX, roundRadius * 2, roundRadius, roundRadius * 2, mProgressPaint);
+            canvas.drawRect(maxX, roundRadius * 2, roundRadius, roundRadius, mProgressPaint);
         }
 
         //未超过底部的线段
@@ -347,7 +334,9 @@ public class TimerProgressView extends View {
             return;
 
         //顶部左边的线段
-        canvas.drawLine(roundRadius, 0, roundRadius + (lineAngel / 2 - 360 + currentAngel) / lineAngel * longLineHeight, 0, mProgressPaint);
+        canvas.drawRect(roundRadius, 0,
+                roundRadius + (lineAngel / 2 - 360 + currentAngel) / lineAngel * longLineHeight,
+                roundRadius, mProgressPaint);
 
 
     }
@@ -378,9 +367,10 @@ public class TimerProgressView extends View {
 
         //右部直线
         if (currentAngel < lineAngel + circleAngel / 2) {
-            canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + (currentAngel - circleAngel / 2) / lineAngel * longLineHeight, mProgressPaint);
+            canvas.drawRect(roundRadius, roundRadius, 2 * roundRadius,
+                    roundRadius + (currentAngel - circleAngel / 2) / lineAngel * longLineHeight, mProgressPaint);
         } else {
-            canvas.drawLine(roundRadius * 2, roundRadius, roundRadius * 2, roundRadius + longLineHeight, mProgressPaint);
+            canvas.drawRect(roundRadius, roundRadius, 2 * roundRadius, roundRadius + longLineHeight, mProgressPaint);
         }
 
         //未超过右部直线
@@ -407,11 +397,17 @@ public class TimerProgressView extends View {
 
         //左部直线
         if (currentAngel < 360 - circleAngel / 2) {
-            canvas.drawLine(0, roundRadius + longLineHeight, 0,
-                    longLineHeight + roundRadius - (currentAngel - lineAngel - circleAngel / 2 * 3) / lineAngel * longLineHeight, mProgressPaint);
+            canvas.drawRect(0, roundRadius + longLineHeight, roundRadius,
+                    longLineHeight + roundRadius -
+                            (currentAngel - lineAngel - circleAngel / 2 * 3) / lineAngel * longLineHeight,
+                    mProgressPaint);
+
 
         } else {
-            canvas.drawLine(0, roundRadius + longLineHeight, 0, roundRadius, mProgressPaint);
+            canvas.drawRect(0, roundRadius + longLineHeight, roundRadius,
+                    roundRadius, mProgressPaint);
+
+
         }
 
         //未超过左部直线
@@ -460,8 +456,8 @@ public class TimerProgressView extends View {
      * @param progressTime  时间 毫秒
      */
     public void initProgressView(float minProgress, float totalProgress, int progressTime) {
-        setmStartingProgress(minProgress);
-        setmTotalProgress(totalProgress);
+        setStartingProgress(minProgress);
+        setTotalProgress(totalProgress);
         setAnimTime(progressTime);
     }
 
@@ -476,10 +472,12 @@ public class TimerProgressView extends View {
      */
     public void initProgressInvalid(int progressSizePx, int progressColor,
                                     int splitColor, int virtualPathColor, boolean showPath) {
+
+        mProgressPaint.setColor(progressColor);
+        mSplitPaint.setColor(splitColor);
+        mLinePathPaint.setColor(virtualPathColor);
+
         this.mProgressSize = progressSizePx;
-        this.mProgressColor = progressColor;
-        this.mSplitColor = splitColor;
-        this.mPathLineColor = virtualPathColor;
         this.showVirtualPath = showPath;
         invalidate();
     }
@@ -504,10 +502,13 @@ public class TimerProgressView extends View {
     private ValueAnimator valueAnim;
 
     public void setCurrentProgress(float toProgress, boolean animate) {
-        // If the view is animating no further actions are allowed
-        if (isAnimating && valueAnim != null) {
-            valueAnim.cancel();
-            valueAnim = null;
+        // 重新初始化动画
+        if (isAnimating) {
+            return;
+        }
+
+        if (valueAnim == null) {
+            mCurrentProgress = mStartingProgress;
         }
 
         this.mTargetProgress = toProgress > mTotalProgress ? mTotalProgress : toProgress;
@@ -522,13 +523,11 @@ public class TimerProgressView extends View {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     mCurrentProgress = (Float) animation.getAnimatedValue();
                     TimerProgressView.this.invalidate();
-
                     if (mListener != null) {
                         if (mTargetProgress == mCurrentProgress) {
                             mListener.onProgressCompleted();
-                            mCurrentProgress = mStartingProgress;
                         } else
-                            mListener.onProgressUpdate(mCurrentProgress / mTotalProgress);
+                            mListener.onProgressUpdate(mCurrentProgress / mTotalProgress * 100F);
                     }
                 }
             });
@@ -543,6 +542,7 @@ public class TimerProgressView extends View {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     isAnimating = false;
+                    valueAnim = null;
                 }
 
                 @Override
@@ -571,10 +571,9 @@ public class TimerProgressView extends View {
     /**
      * 设置进度条的颜色
      *
-     * @param mColor 颜色值（默认主题的primary颜色）
+     * @param mColor 颜色值 res
      */
     public void setProgressColor(int mColor) {
-        this.mProgressColor = mColor;
         mProgressPaint.setColor(mColor);
         invalidate();
     }
@@ -582,10 +581,9 @@ public class TimerProgressView extends View {
     /**
      * 设置分割线的颜色
      *
-     * @param mColor 颜色值（默认白色）
+     * @param mColor res
      */
-    public void setSplitColor(int mColor) {
-        this.mSplitColor = mColor;
+    public void setSplitColorRes(int mColor) {
         mSplitPaint.setColor(mColor);
         invalidate();
     }
@@ -600,16 +598,16 @@ public class TimerProgressView extends View {
         invalidate();
     }
 
-    public void setmPathLineColor(int mPathLineColor) {
-        this.mPathLineColor = mPathLineColor;
+    public void setPathLineColor(int mPathLineColor) {
+        mLinePathPaint.setColor(mPathLineColor);
         invalidate();
     }
 
-    public void setmStartingProgress(float mStartingProgress) {
+    public void setStartingProgress(float mStartingProgress) {
         this.mStartingProgress = mStartingProgress;
     }
 
-    public void setmTotalProgress(float mTotalProgress) {
+    public void setTotalProgress(float mTotalProgress) {
         this.mTotalProgress = mTotalProgress;
     }
 
@@ -623,7 +621,7 @@ public class TimerProgressView extends View {
     public interface OnProgressListener {
         void onProgressStart();
 
-        void onProgressUpdate(float progress);
+        void onProgressUpdate(@FloatRange(from = 0F, to = 100F) float progressPercent);
 
         void onProgressCancel();
 

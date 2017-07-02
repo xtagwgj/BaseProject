@@ -7,36 +7,14 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.xtagwgj.baseprojectdemo.fabprogress.ProgressFabButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:pFabCurrentProgress="17"
-        app:pFabFinalIcon="@android:drawable/ic_dialog_dialer"
-        app:pFabProgressIcon="@android:drawable/ic_dialog_email"
-        app:pFabStartingProgress="0"
-        app:pFabStepSize="5"
-        app:pFabTotalProgress="100" />
-
-    <com.xtagwgj.baseprojectdemo.fabprogress.ProgressView
-        android:id="@+id/progress"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_centerInParent="true" />
-
-    <com.xtagwgj.baseprojectdemo.timerview.TimerProgressView
-        android:id="@+id/progressButton"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/progress"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
-
-
     <com.xtagwgj.baseprojectdemo.timerview.TimerButton
+        android:id="@+id/timerButton"
         android:layout_width="80dp"
-        android:layout_height="180dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        app:timerProgressSize="2dp"
+        app:timerProgressTime="5000"
+        app:timerSplitColor="@android:color/white"
+        app:timerSplitSize="4dp" />
 
 </RelativeLayout>

@@ -6,9 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.xtagwgj.baseproject.utils.LogUtils;
 import com.xtagwgj.baseproject.utils.MeasureUtil;
-import com.xtagwgj.baseprojectdemo.fabprogress.ThemeUtils;
 
 /**
  * 圆角的按钮
@@ -72,7 +70,6 @@ public class RectButton extends android.support.v7.widget.AppCompatButton {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                LogUtils.e("onTouchEvent", "touchColor");
 
                 gradientDrawable.setColor(focusColor);
                 setBackground(gradientDrawable);
@@ -83,12 +80,12 @@ public class RectButton extends android.support.v7.widget.AppCompatButton {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_OUTSIDE:
-                LogUtils.e("onTouchEvent", "solidColor");
 
                 setTextColor(solidTextColor);
                 gradientDrawable.setColor(solidColor);
                 setBackground(gradientDrawable);
-//                return true;
+
+                break;
 
             default:
                 break;

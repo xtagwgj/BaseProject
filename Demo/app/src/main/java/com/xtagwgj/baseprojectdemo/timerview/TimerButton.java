@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.xtagwgj.baseprojectdemo.R;
-import com.xtagwgj.baseprojectdemo.fabprogress.ThemeUtils;
 
 /**
  * 计时的按钮
@@ -20,8 +19,10 @@ import com.xtagwgj.baseprojectdemo.fabprogress.ThemeUtils;
 
 public class TimerButton extends FrameLayout {
 
+    //按钮
     private RectButton rectButton;
 
+    //进度条的视图
     private TimerProgressView progressView;
 
     //进度条尺寸
@@ -113,6 +114,8 @@ public class TimerButton extends FrameLayout {
                 1640
         );
 
+        typedArray.recycle();
+
 
         progressView = (TimerProgressView) view.findViewById(R.id.progressView);
         progressView.initProgressView(minProgress, maxProgress, progressTime);
@@ -163,30 +166,34 @@ public class TimerButton extends FrameLayout {
 
     public void setMinProgress(float minProgress) {
         this.minProgress = minProgress;
-        progressView.setmStartingProgress(minProgress);
+        progressView.setStartingProgress(minProgress);
     }
 
     public void setMaxProgress(float maxProgress) {
         this.maxProgress = maxProgress;
-        progressView.setmTotalProgress(maxProgress);
+        progressView.setTotalProgress(maxProgress);
     }
 
-    public void setProgressColor(int progressColor) {
+    public void setProgressColor( int progressColor) {
         this.progressColor = progressColor;
         progressView.setProgressColor(progressColor);
     }
 
-    public void setSplitColor(int splitColor) {
+    public void setSplitColor( int splitColor) {
         this.splitColor = splitColor;
-        progressView.setSplitColor(splitColor);
+        progressView.setSplitColorRes(splitColor);
     }
 
-    public void setVirtualPathColor(int virtualPathColor) {
+    public void setVirtualPathColor( int virtualPathColor) {
         this.virtualPathColor = virtualPathColor;
-        progressView.setmPathLineColor(virtualPathColor);
+        progressView.setPathLineColor(virtualPathColor);
     }
 
     public void setShowVirthalPath(boolean showVirthalPath) {
         this.showVirthalPath = showVirthalPath;
+    }
+
+    public void setProgressListener(TimerProgressView.OnProgressListener onProgressListener) {
+        progressView.setProgressListener(onProgressListener);
     }
 }
