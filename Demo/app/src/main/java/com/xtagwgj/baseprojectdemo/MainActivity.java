@@ -2,7 +2,6 @@ package com.xtagwgj.baseprojectdemo;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
 
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
@@ -31,24 +30,22 @@ public class MainActivity extends _BaseActivity {
 
         RectButton button = timerButton.getRectButton();
 //        button.setBackground(getResources().getDrawable(R.mipmap.ic_launcher));
-        button.setText("233123");
-        button.setGravity(Gravity.CENTER);
-        button.setTextColor(getResources().getColor(android.R.color.white));
+        button.setText("331233");
+        button.setTextColor(getResources().getColor(android.R.color.black));
 
-        Drawable drawable = getResources().getDrawable(android.R.drawable.ic_menu_search);
+        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
 
         /// 这一步必须要做,否则不会显示.
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         button.setCompoundDrawables(drawable, null, null, null);
 
+        button.setStateDrawableByColorRes(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
 
-//        button.setStateDrawableByColorRes(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
 
-
-        button.setStateDrawable(
-                getResources().getDrawable(R.mipmap.ic_launcher),
-                null,
-                null);
+//        button.setStateDrawable(
+//                getResources().getDrawable(R.mipmap.ic_launcher),
+//                null,
+//                null);
 
 
         timerButton.setProgressListener(new TimerProgressView.OnProgressListener() {

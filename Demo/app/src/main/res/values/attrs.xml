@@ -19,7 +19,9 @@
         <!--虚拟进度条路径的颜色-->
         <attr name="timerVirtualProgressColor" format="color" />
         <!--是否显示虚拟的路径-->
-        <attr name="timerShowVirtual" format="boolean"/>
+        <attr name="timerShowVirtual" format="boolean" />
+        <!--图片的外边距-->
+        <attr name="timerDrawablePadding" format="integer" />
     </declare-styleable>
 
 </resources>

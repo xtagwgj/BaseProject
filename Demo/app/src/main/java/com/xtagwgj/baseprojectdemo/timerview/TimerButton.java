@@ -102,6 +102,8 @@ public class TimerButton extends FrameLayout {
                 1640
         );
 
+        Integer drawablePadding = typedArray.getInteger(R.styleable.TimerButton_timerDrawablePadding, 16);
+
         typedArray.recycle();
 
 
@@ -110,6 +112,7 @@ public class TimerButton extends FrameLayout {
         progressView.initProgressInvalid(mProgressSizePx, progressColor, splitColor, virtualPathColor, showVirtualPath);
 
         rectButton = (RectButton) view.findViewById(R.id.normalButton);
+        rectButton.setCompoundDrawablePadding(drawablePadding);
         rectButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +135,14 @@ public class TimerButton extends FrameLayout {
     //获取button
     public RectButton getRectButton() {
         return rectButton;
+    }
+
+    /**
+     * 设置drawable的外边距
+     */
+    public void setCompoundDrawablePadding(int paddingPx) {
+        rectButton.setCompoundDrawablePadding(paddingPx);
+        rectButton.invalidate();
     }
 
     /**
