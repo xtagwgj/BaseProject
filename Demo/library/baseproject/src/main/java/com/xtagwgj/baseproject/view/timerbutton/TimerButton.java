@@ -1,4 +1,4 @@
-package com.xtagwgj.baseprojectdemo.timerview;
+package com.xtagwgj.baseproject.view.timerbutton;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,17 +12,17 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.xtagwgj.baseprojectdemo.R;
+import com.xtagwgj.baseproject.R;
 
 /**
- * 计时的按钮
+ * 计时的视图
  * Created by xtagwgj on 2017/7/1.
  */
 
 public class TimerButton extends FrameLayout {
 
     //按钮
-    private RectButton rectButton;
+    private TimerTextView timerText;
 
     //进度条的视图
     private TimerProgressView progressView;
@@ -32,13 +32,6 @@ public class TimerButton extends FrameLayout {
 
     //分割线大小
     private int mSplitSizePx;
-
-    //最小进度值
-    private float minProgress;
-
-    //最大进度值
-    private float maxProgress;
-
 
     public TimerButton(@NonNull Context context) {
         this(context, null);
@@ -87,12 +80,12 @@ public class TimerButton extends FrameLayout {
                 8
         );
 
-        minProgress = typedArray.getFloat(
+        Float minProgress = typedArray.getFloat(
                 R.styleable.TimerButton_timerMinProgress,
                 0
         );
 
-        maxProgress = typedArray.getFloat(
+        Float maxProgress = typedArray.getFloat(
                 R.styleable.TimerButton_timerTotalProgress,
                 100
         );
@@ -111,38 +104,38 @@ public class TimerButton extends FrameLayout {
         progressView.initProgressView(minProgress, maxProgress, progressTime);
         progressView.initProgressInvalid(mProgressSizePx, progressColor, splitColor, virtualPathColor, showVirtualPath);
 
-        rectButton = (RectButton) view.findViewById(R.id.normalButton);
-        rectButton.setCompoundDrawablePadding(drawablePadding);
-        rectButton.setOnClickListener(new OnClickListener() {
+        timerText = (TimerTextView) view.findViewById(R.id.normalButton);
+        timerText.setCompoundDrawablePadding(drawablePadding);
+        timerText.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressView.setCurrentProgress(maxProgress, true);
+                progressView.setCurrentProgress(progressView.getmTotalProgress(), true);
             }
         });
 
-        initButton();
+        initTextView();
     }
 
-    private void initButton() {
+    private void initTextView() {
 
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) rectButton.getLayoutParams();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) timerText.getLayoutParams();
         int margins = mProgressSizePx + mSplitSizePx;
         layoutParams.setMargins(margins, margins, margins, margins);
-        rectButton.setLayoutParams(layoutParams);
+        timerText.setLayoutParams(layoutParams);
 
     }
 
     //获取button
-    public RectButton getRectButton() {
-        return rectButton;
+    public TimerTextView getTimerText() {
+        return timerText;
     }
 
     /**
      * 设置drawable的外边距
      */
     public void setCompoundDrawablePadding(int paddingPx) {
-        rectButton.setCompoundDrawablePadding(paddingPx);
-        rectButton.invalidate();
+        timerText.setCompoundDrawablePadding(paddingPx);
+        timerText.invalidate();
     }
 
     /**
@@ -153,7 +146,7 @@ public class TimerButton extends FrameLayout {
     public void setProgressSizePx(@IntRange(from = 0) int mProgressSizePx) {
         this.mProgressSizePx = mProgressSizePx;
         progressView.setProgressSize(mProgressSizePx);
-        initButton();
+        initTextView();
     }
 
     /**
@@ -163,7 +156,7 @@ public class TimerButton extends FrameLayout {
      */
     public void setSplitSizePx(@IntRange(from = 0) int mSplitSizePx) {
         this.mSplitSizePx = mSplitSizePx;
-        initButton();
+        initTextView();
     }
 
     /**
@@ -235,6 +228,6 @@ public class TimerButton extends FrameLayout {
      */
     public void setProgressListener(TimerProgressView.OnProgressListener onProgressListener) {
         progressView.setProgressListener(onProgressListener);
-
     }
+
 }

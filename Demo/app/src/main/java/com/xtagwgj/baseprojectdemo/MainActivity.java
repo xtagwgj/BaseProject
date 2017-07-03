@@ -1,14 +1,12 @@
 package com.xtagwgj.baseprojectdemo;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
-import com.xtagwgj.baseproject.utils.LogUtils;
-import com.xtagwgj.baseprojectdemo.timerview.RectButton;
-import com.xtagwgj.baseprojectdemo.timerview.TimerButton;
-import com.xtagwgj.baseprojectdemo.timerview.TimerProgressView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,52 +22,48 @@ public class MainActivity extends _BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        TimerButton timerButton = (TimerButton) findViewById(R.id.timerButton);
-        timerButton.setProgressSizePx(12);
-        timerButton.setProgressColor(getResources().getColor(R.color.colorAccent));
+//        TimerButton timerButton = (TimerButton) findViewById(R.id.timerButton);
+//        timerButton.setProgressSizePx(12);
+//        timerButton.setProgressColor(getResources().getColor(R.color.colorAccent));
+//
+//        TimerTextView button = timerButton.getTimerText();
+//        button.setText("331233");
+//        button.setTextColor(getResources().getColor(android.R.color.black));
+//
+//        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+//        /// 这一步必须要做,否则不会显示.
+//        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//        button.setCompoundDrawables(drawable, null, null, null);
+//
+//        button.setStateDrawableByColorRes(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+//
+//
+//        timerButton.setProgressListener(null);
 
-        RectButton button = timerButton.getRectButton();
-//        button.setBackground(getResources().getDrawable(R.mipmap.ic_launcher));
-        button.setText("331233");
-        button.setTextColor(getResources().getColor(android.R.color.black));
-
-        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
-
-        /// 这一步必须要做,否则不会显示.
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        button.setCompoundDrawables(drawable, null, null, null);
-
-        button.setStateDrawableByColorRes(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
-
-
-//        button.setStateDrawable(
-//                getResources().getDrawable(R.mipmap.ic_launcher),
-//                null,
-//                null);
-
-
-        timerButton.setProgressListener(new TimerProgressView.OnProgressListener() {
+        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_loading);
+        animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onProgressStart() {
-                LogUtils.e("onProgressStart");
+            public void onAnimationStart(Animation animation) {
+
             }
 
             @Override
-            public void onProgressUpdate(float progress) {
-//                LogUtils.e("onProgressUpdate:" + progress);
+            public void onAnimationEnd(Animation animation) {
+
             }
 
             @Override
-            public void onProgressCancel() {
-                LogUtils.e("onProgressCancel");
-            }
+            public void onAnimationRepeat(Animation animation) {
 
-            @Override
-            public void onProgressCompleted() {
-                LogUtils.e("onProgressCompleted");
             }
         });
-
+        findViewById(R.id.loading).startAnimation(animation);
+        findViewById(R.id.loading).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animation.cancel();
+            }
+        });
 
     }
 

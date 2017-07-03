@@ -73,16 +73,40 @@
 
     <declare-styleable name="NumberRunningTextView">
         <!--帧数-->
-        <attr name="frameNum" format="integer"/>
+        <attr name="frameNum" format="integer" />
         <!--内容的格式-->
         <attr name="textType">
-            <enum name="money" value="0"/>
-            <enum name="num" value="1"/>
+            <enum name="money" value="0" />
+            <enum name="num" value="1" />
         </attr>
         <!--是否使用每三位数字一个逗号-->
-        <attr name="useCommaFormat" format="boolean"/>
+        <attr name="useCommaFormat" format="boolean" />
         <!--是否当内容改变的时候使用动画，不改变则不使用动画-->
-        <attr name="runWhenChange" format="boolean"/>
+        <attr name="runWhenChange" format="boolean" />
 
+    </declare-styleable>
+
+    <!--倒计时按钮-->
+    <declare-styleable name="TimerButton">
+        <!--分割线的大小-->
+        <attr name="timerSplitSize" format="dimension" />
+        <!--进度条的大小-->
+        <attr name="timerProgressSize" format="dimension" />
+        <!--进度条计时的时间-->
+        <attr name="timerProgressTime" format="integer" />
+        <!--进度条的最小值-->
+        <attr name="timerMinProgress" format="float" />
+        <!--进度条的最大值-->
+        <attr name="timerTotalProgress" format="float" />
+        <!--进度条的颜色-->
+        <attr name="timerProgressColor" format="color" />
+        <!--分割线的颜色-->
+        <attr name="timerSplitColor" format="color" />
+        <!--虚拟进度条路径的颜色-->
+        <attr name="timerVirtualProgressColor" format="color" />
+        <!--是否显示虚拟的路径-->
+        <attr name="timerShowVirtual" format="boolean" />
+        <!--图片的外边距-->
+        <attr name="timerDrawablePadding" format="integer" />
     </declare-styleable>
 </resources>

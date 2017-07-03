@@ -1,4 +1,4 @@
-package com.xtagwgj.baseprojectdemo.timerview;
+package com.xtagwgj.baseproject.view.timerbutton;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,27 +11,30 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 
 /**
- * 圆角的按钮
+ * 进度条包裹的TextView
  * Created by xtagwgj on 2017/7/1.
+ * <p>
+ * Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
+ * /// 这一步必须要做,否则不会显示.
+ * drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+ * button.setCompoundDrawables(drawable, null, null, null);
  */
 
-public class RectButton extends android.support.v7.widget.AppCompatTextView {
+public class TimerTextView extends android.support.v7.widget.AppCompatTextView {
 
     //控件的样式
     private final StateListDrawable stateListDrawable = new StateListDrawable();
 
-
-    public RectButton(Context context) {
+    public TimerTextView(Context context) {
         this(context, null);
     }
 
-    public RectButton(Context context, AttributeSet attrs) {
+    public TimerTextView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RectButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TimerTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-//        setClickable(true);
         setGravity(Gravity.CENTER_VERTICAL);
     }
 

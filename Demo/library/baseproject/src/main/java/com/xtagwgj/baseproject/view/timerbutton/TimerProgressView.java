@@ -1,4 +1,4 @@
-package com.xtagwgj.baseprojectdemo.timerview;
+package com.xtagwgj.baseproject.view.timerbutton;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -13,8 +13,6 @@ import android.support.annotation.FloatRange;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-
-import static com.xtagwgj.baseprojectdemo.timerview.ThemeUtils.getThemePrimaryColor;
 
 /**
  * 带时间限制的进度条视图
@@ -119,7 +117,7 @@ public class TimerProgressView extends View {
         mProgressPaint = new Paint();
         mProgressPaint.setAntiAlias(true);
         mProgressPaint.setStyle(Paint.Style.FILL);
-        mProgressPaint.setColor(getThemePrimaryColor(context));
+        mProgressPaint.setColor(ThemeUtils.getThemePrimaryColor(context));
         mProgressPaint.setStrokeWidth(mProgressSize * 2);
 
         mSplitPaint = new Paint();
@@ -615,9 +613,21 @@ public class TimerProgressView extends View {
         this.mTotalProgress = mTotalProgress;
     }
 
+    public float getmStartingProgress() {
+        return mStartingProgress;
+    }
+
+    public float getmTotalProgress() {
+        return mTotalProgress;
+    }
+
+    public float getmCurrentProgress() {
+        return mCurrentProgress;
+    }
+
     /*
-            * Interface callbacks
-            * */
+                * Interface callbacks
+                * */
     public void setProgressListener(OnProgressListener mListener) {
         this.mListener = mListener;
     }

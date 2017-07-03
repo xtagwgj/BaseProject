@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="TimerButton">
-        <!--分割线的大小-->
-        <attr name="timerSplitSize" format="dimension" />
-        <!--进度条的大小-->
-        <attr name="timerProgressSize" format="dimension" />
-        <!--进度条计时的时间-->
-        <attr name="timerProgressTime" format="integer" />
-        <!--进度条的最小值-->
-        <attr name="timerMinProgress" format="float" />
-        <!--进度条的最大值-->
-        <attr name="timerTotalProgress" format="float" />
-        <!--进度条的颜色-->
-        <attr name="timerProgressColor" format="color" />
-        <!--分割线的颜色-->
-        <attr name="timerSplitColor" format="color" />
-        <!--虚拟进度条路径的颜色-->
-        <attr name="timerVirtualProgressColor" format="color" />
-        <!--是否显示虚拟的路径-->
-        <attr name="timerShowVirtual" format="boolean" />
-        <!--图片的外边距-->
-        <attr name="timerDrawablePadding" format="integer" />
-    </declare-styleable>
 
 </resources>

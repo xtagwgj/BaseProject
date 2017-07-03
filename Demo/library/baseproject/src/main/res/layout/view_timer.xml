@@ -6,13 +6,13 @@
     android:orientation="vertical"
     android:padding="@dimen/default_margin">
 
-    <com.xtagwgj.baseprojectdemo.timerview.TimerProgressView
+    <com.xtagwgj.baseproject.view.timerbutton.TimerProgressView
         android:id="@+id/progressView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
-    <com.xtagwgj.baseprojectdemo.timerview.RectButton
+    <com.xtagwgj.baseproject.view.timerbutton.TimerTextView
         android:id="@+id/normalButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
