@@ -7,6 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <!--activity动画-->
+        <item name="android:windowAnimationStyle">@style/aty_anim</item>
+
+        <!--设置全局button的样式-->
+        <!--<item name="buttonStyle">@style/btnStyle</item>-->
+
         <item name="dayNightBackground">@color/day_background_color</item>
         <item name="dayNightOneTextColor">@color/day_one_text_color</item>
         <item name="dayNightTwoTextColor">@color/day_two_text_color</item>
@@ -15,7 +21,7 @@
     </style>
 
     <!--冷启动界面-->
-    <style name="XAppTheme.Launcher" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="XAppTheme.Launcher" parent="XAppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
@@ -24,7 +30,7 @@
     <style name="DayTheme" parent="XAppTheme"/>
 
     <!--夜间主题-->
-    <style name="NightTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="NightTheme" parent="XAppTheme">
         <item name="colorPrimary">@color/night_background_color</item>
         <item name="colorPrimaryDark">@color/night_background_color</item>
         <item name="colorAccent">@color/night_background_color</item>
@@ -35,6 +41,28 @@
         <item name="dayNightThreeTextColor">@color/night_there_text_color</item>
         <item name="dayNightBackgroundDrawable">@color/night_there_text_color</item>
 
+    </style>
+
+    <!--Button样式-->
+    <!--<style name="btnStyle" parent="Base.Widget.AppCompat.Button">-->
+        <!--<item name="background">@drawable/btn_default_material</item>-->
+        <!--<item name="textAppearance">?attr/textAppearanceButton</item>-->
+        <!--<item name="minHeight">48dip</item>-->
+        <!--<item name="minWidth">88dip</item>-->
+        <!--<item name="stateListAnimator">@anim/button_state_list_anim_material</item>-->
+        <!--<item name="focusable">true</item>-->
+        <!--<item name="clickable">true</item>-->
+        <!--<item name="gravity">center_vertical|center_horizontal</item>-->
+        <!--<item name="colorButtonNormal">@android:color/black</item>-->
+        <!--<item name="android:textColor">@android:color/black</item>-->
+    <!--</style>-->
+
+    <!--activity的进入和退出动画-->
+    <style name="aty_anim" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/out_to_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/in_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
     </style>
 
     <!--对话框样式-->
