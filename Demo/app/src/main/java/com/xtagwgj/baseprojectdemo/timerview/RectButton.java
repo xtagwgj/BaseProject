@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 /**
@@ -17,18 +18,22 @@ public class RectButton extends android.support.v7.widget.AppCompatButton {
     //控件的样式
     private final StateListDrawable stateListDrawable = new StateListDrawable();
 
-
     public RectButton(Context context) {
         this(context, null);
     }
 
     public RectButton(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs,  0);
     }
 
     public RectButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setClickable(true);
+    }
+
+    public void setCompoundDrawables(@Nullable Drawable left, @Nullable Drawable top,
+                                     @Nullable Drawable right, @Nullable Drawable bottom) {
+        super.setCompoundDrawables(left, top, right, bottom);
     }
 
     public void setStateDrawable(int idNormalDrawable, int idPressedDrawable, int idFocusedDrawable) {

@@ -482,6 +482,10 @@ public class TimerProgressView extends View {
         invalidate();
     }
 
+    public void setShowVirtualPath(boolean showVirtualPath) {
+        this.showVirtualPath = showVirtualPath;
+    }
+
     /**
      * 设置动画的时间
      *

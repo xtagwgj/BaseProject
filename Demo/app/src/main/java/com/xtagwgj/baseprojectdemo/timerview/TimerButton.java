@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.AttrRes;
+import android.support.annotation.FloatRange;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -31,26 +33,12 @@ public class TimerButton extends FrameLayout {
     //分割线大小
     private int mSplitSizePx;
 
-    //进度条运行的时间
-    private int progressTime;
-
     //最小进度值
     private float minProgress;
 
     //最大进度值
     private float maxProgress;
 
-    //进度条的颜色
-    private int progressColor;
-
-    //分割线的颜色
-    private int splitColor;
-
-    //虚拟路径的颜色
-    private int virtualPathColor;
-
-    //是否显示虚拟路径
-    private boolean showVirtualPath;
 
     public TimerButton(@NonNull Context context) {
         this(context, null);
@@ -69,22 +57,22 @@ public class TimerButton extends FrameLayout {
         final TypedArray typedArray = getContext().obtainStyledAttributes(
                 attrs, R.styleable.TimerButton, defStyleAttr, 0);
 
-        progressColor = typedArray.getColor(
+        int progressColor = typedArray.getColor(
                 R.styleable.TimerButton_timerProgressColor,
                 ThemeUtils.getThemePrimaryColor(getContext())
         );
 
-        splitColor = typedArray.getColor(
+        int splitColor = typedArray.getColor(
                 R.styleable.TimerButton_timerSplitColor,
                 Color.parseColor("#666666")
         );
 
-        virtualPathColor = typedArray.getColor(
+        int virtualPathColor = typedArray.getColor(
                 R.styleable.TimerButton_timerVirtualProgressColor,
                 Color.parseColor("#dcdcdc")
         );
 
-        showVirtualPath = typedArray.getBoolean(
+        Boolean showVirtualPath = typedArray.getBoolean(
                 R.styleable.TimerButton_timerShowVirtual,
                 true
         );
@@ -109,7 +97,7 @@ public class TimerButton extends FrameLayout {
                 100
         );
 
-        progressTime = typedArray.getInteger(
+        Integer progressTime = typedArray.getInteger(
                 R.styleable.TimerButton_timerProgressTime,
                 1640
         );
@@ -129,8 +117,6 @@ public class TimerButton extends FrameLayout {
             }
         });
 
-        progressView.setProgressSize(mProgressSizePx);
-
         initButton();
     }
 
@@ -148,52 +134,96 @@ public class TimerButton extends FrameLayout {
         return rectButton;
     }
 
-    public void setmProgressSizePx(int mProgressSizePx) {
+    /**
+     * 设置进度的的尺寸
+     *
+     * @param mProgressSizePx px值
+     */
+    public void setProgressSizePx(@IntRange(from = 0) int mProgressSizePx) {
         this.mProgressSizePx = mProgressSizePx;
         progressView.setProgressSize(mProgressSizePx);
         initButton();
     }
 
-    public void setmSplitSizePx(int mSplitSizePx) {
+    /**
+     * 设置分割线的尺寸
+     *
+     * @param mSplitSizePx px 值
+     */
+    public void setSplitSizePx(@IntRange(from = 0) int mSplitSizePx) {
         this.mSplitSizePx = mSplitSizePx;
         initButton();
     }
 
-    public void setProgressTime(int progressTime) {
-        this.progressTime = progressTime;
+    /**
+     * 设置进度条运行的时间
+     *
+     * @param progressTime 时间，毫秒
+     */
+    public void setProgressTime(@IntRange(from = 0) int progressTime) {
         progressView.setAnimTime(progressTime);
     }
 
-    public void setMinProgress(float minProgress) {
-        this.minProgress = minProgress;
+    /**
+     * 最小的进度值
+     *
+     * @param minProgress 最小进度值
+     */
+    public void setMinProgress(@FloatRange(from = 0) float minProgress) {
         progressView.setStartingProgress(minProgress);
     }
 
+    /**
+     * 最大进度
+     *
+     * @param maxProgress 最大进度
+     */
     public void setMaxProgress(float maxProgress) {
-        this.maxProgress = maxProgress;
         progressView.setTotalProgress(maxProgress);
     }
 
-    public void setProgressColor( int progressColor) {
-        this.progressColor = progressColor;
+    /**
+     * 进度条的颜色
+     *
+     * @param progressColor 颜色
+     */
+    public void setProgressColor(int progressColor) {
         progressView.setProgressColor(progressColor);
     }
 
-    public void setSplitColor( int splitColor) {
-        this.splitColor = splitColor;
+    /**
+     * 分割线的颜色
+     *
+     * @param splitColor 颜色
+     */
+    public void setSplitColor(int splitColor) {
         progressView.setSplitColorRes(splitColor);
     }
 
-    public void setVirtualPathColor( int virtualPathColor) {
-        this.virtualPathColor = virtualPathColor;
+    /**
+     * 虚拟进度条的颜色
+     *
+     * @param virtualPathColor 颜色
+     */
+    public void setVirtualPathColor(int virtualPathColor) {
         progressView.setPathLineColor(virtualPathColor);
     }
 
-    public void setShowVirtualPath(boolean showVirtualPath) {
-        this.showVirtualPath = showVirtualPath;
+    /**
+     * 是否显示虚拟进度条
+     *
+     * @param show 是否显示
+     */
+
+    public void setShowVirtualPath(boolean show) {
+        progressView.setShowVirtualPath(show);
     }
 
+    /**
+     * 回调
+     */
     public void setProgressListener(TimerProgressView.OnProgressListener onProgressListener) {
         progressView.setProgressListener(onProgressListener);
+
     }
 }

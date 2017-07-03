@@ -14,7 +14,9 @@
         android:layout_centerInParent="true"
         app:timerProgressSize="2dp"
         app:timerProgressTime="5000"
+        android:drawableLeft="@mipmap/ic_launcher"
         app:timerSplitColor="@android:color/white"
         app:timerSplitSize="4dp" />
+
 
 </RelativeLayout>
