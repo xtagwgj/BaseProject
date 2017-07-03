@@ -1,10 +1,12 @@
 package com.xtagwgj.baseprojectdemo;
 
 import android.os.Bundle;
+import android.view.Gravity;
 
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
 import com.xtagwgj.baseproject.utils.LogUtils;
+import com.xtagwgj.baseprojectdemo.timerview.RectButton;
 import com.xtagwgj.baseprojectdemo.timerview.TimerButton;
 import com.xtagwgj.baseprojectdemo.timerview.TimerProgressView;
 
@@ -25,6 +27,17 @@ public class MainActivity extends _BaseActivity {
         TimerButton timerButton = (TimerButton) findViewById(R.id.timerButton);
         timerButton.setmProgressSizePx(12);
         timerButton.setProgressColor(getResources().getColor(R.color.colorAccent));
+
+        RectButton button = timerButton.getRectButton();
+//        button.setBackground(getResources().getDrawable(R.mipmap.ic_launcher));
+        button.setText("233123");
+        button.setGravity(Gravity.CENTER);
+        button.setTextColor(getResources().getColor(android.R.color.white));
+        button.setCompoundDrawables(null, getResources().getDrawable(android.R.drawable.ic_menu_search), null, null);
+
+//        button.setStateDrawableByColorRes(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+
+
         timerButton.setProgressListener(new TimerProgressView.OnProgressListener() {
             @Override
             public void onProgressStart() {
@@ -33,7 +46,7 @@ public class MainActivity extends _BaseActivity {
 
             @Override
             public void onProgressUpdate(float progress) {
-                LogUtils.e("onProgressUpdate:" + progress);
+//                LogUtils.e("onProgressUpdate:" + progress);
             }
 
             @Override

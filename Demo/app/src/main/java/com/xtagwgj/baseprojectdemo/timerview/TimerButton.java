@@ -50,7 +50,7 @@ public class TimerButton extends FrameLayout {
     private int virtualPathColor;
 
     //是否显示虚拟路径
-    private boolean showVirthalPath;
+    private boolean showVirtualPath;
 
     public TimerButton(@NonNull Context context) {
         this(context, null);
@@ -84,7 +84,7 @@ public class TimerButton extends FrameLayout {
                 Color.parseColor("#dcdcdc")
         );
 
-        showVirthalPath = typedArray.getBoolean(
+        showVirtualPath = typedArray.getBoolean(
                 R.styleable.TimerButton_timerShowVirtual,
                 true
         );
@@ -119,7 +119,7 @@ public class TimerButton extends FrameLayout {
 
         progressView = (TimerProgressView) view.findViewById(R.id.progressView);
         progressView.initProgressView(minProgress, maxProgress, progressTime);
-        progressView.initProgressInvalid(mProgressSizePx, progressColor, splitColor, virtualPathColor, showVirthalPath);
+        progressView.initProgressInvalid(mProgressSizePx, progressColor, splitColor, virtualPathColor, showVirtualPath);
 
         rectButton = (RectButton) view.findViewById(R.id.normalButton);
         rectButton.setOnClickListener(new OnClickListener() {
@@ -189,8 +189,8 @@ public class TimerButton extends FrameLayout {
         progressView.setPathLineColor(virtualPathColor);
     }
 
-    public void setShowVirthalPath(boolean showVirthalPath) {
-        this.showVirthalPath = showVirthalPath;
+    public void setShowVirtualPath(boolean showVirtualPath) {
+        this.showVirtualPath = showVirtualPath;
     }
 
     public void setProgressListener(TimerProgressView.OnProgressListener onProgressListener) {

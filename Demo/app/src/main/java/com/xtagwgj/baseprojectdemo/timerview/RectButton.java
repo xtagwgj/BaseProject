@@ -1,12 +1,11 @@
 package com.xtagwgj.baseprojectdemo.timerview;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-
-import com.xtagwgj.baseproject.utils.MeasureUtil;
 
 /**
  * 圆角的按钮
@@ -16,18 +15,8 @@ import com.xtagwgj.baseproject.utils.MeasureUtil;
 public class RectButton extends android.support.v7.widget.AppCompatButton {
 
     //控件的样式
-    private final GradientDrawable gradientDrawable = new GradientDrawable();
+    private final StateListDrawable stateListDrawable = new StateListDrawable();
 
-    private int focusColor = ThemeUtils.getThemePrimaryColor(getContext());
-
-    private int solidColor = Color.WHITE;
-
-    private int focusTextColor = Color.WHITE;
-
-    private int solidTextColor = focusColor;
-
-    //圆角半径
-    private int radius = 24;
 
     public RectButton(Context context) {
         this(context, null);
@@ -39,60 +28,45 @@ public class RectButton extends android.support.v7.widget.AppCompatButton {
 
     public RectButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    private void init() {
-        setTextColor(solidTextColor);
-        //将Button的默认背景色改为白色
-        gradientDrawable.setColor(solidColor);
-        gradientDrawable.setCornerRadius(MeasureUtil.dp2px(getContext(), radius));
-        setBackground(gradientDrawable);
         setClickable(true);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
+    public void setStateDrawable(int idNormalDrawable, int idPressedDrawable, int idFocusedDrawable) {
+        Drawable normal = idNormalDrawable == -1 ? null : getContext().getResources().getDrawable(idNormalDrawable);
+        Drawable pressed = idPressedDrawable == -1 ? null : getContext().getResources().getDrawable(idPressedDrawable);
+        Drawable focus = idFocusedDrawable == -1 ? null : getContext().getResources().getDrawable(idFocusedDrawable);
 
-        if (width < height) {
-            radius = height / 2;
-        } else
-            radius = width / 2;
-
-        init();
+        setStateDrawable(normal, pressed, focus);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public void setStateDrawable(Drawable normal, Drawable pressed, Drawable focus) {
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+        stateListDrawable.addState(new int[]{android.R.attr.state_enabled, android.R.attr.state_focused}, focus);
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed, android.R.attr.state_enabled}, pressed);
+        stateListDrawable.addState(new int[]{android.R.attr.state_focused}, focus);
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, pressed);
+        stateListDrawable.addState(new int[]{android.R.attr.state_enabled}, normal);
+        stateListDrawable.addState(new int[]{}, normal);
 
-                gradientDrawable.setColor(focusColor);
-                setBackground(gradientDrawable);
-                setTextColor(focusTextColor);
-                postInvalidate();
-                break;
+        setBackground(stateListDrawable);
+    }
 
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-            case MotionEvent.ACTION_OUTSIDE:
 
-                setTextColor(solidTextColor);
-                gradientDrawable.setColor(solidColor);
-                setBackground(gradientDrawable);
+    public void setStateDrawableByColorRes(int normalColorRes, int pressColorRes, int focusedColorRes) {
+        setStateDrawable(
+                getDrawableByColor(normalColorRes),
+                getDrawableByColor(pressColorRes),
+                getDrawableByColor(focusedColorRes)
+        );
+    }
 
-                break;
+    private Drawable getDrawableByColor(int colorRes) {
+        ShapeDrawable shapeDrawable = new ShapeDrawable();
+        shapeDrawable.setShape(new CircleArcRectangleShape());
+        shapeDrawable.getPaint().setColor(getContext().getResources().getColor(colorRes));
+        shapeDrawable.getPaint().setStyle(Paint.Style.FILL);
 
-            default:
-                break;
-
-        }
-
-        return super.onTouchEvent(event);
+        return shapeDrawable;
     }
 
 }
