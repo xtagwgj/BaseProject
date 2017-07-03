@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils;
 
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
+import com.xtagwgj.baseproject.widget.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,12 @@ public class MainActivity extends _BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void doBeforeSetContentView() {
+        super.doBeforeSetContentView();
+        StatusBarUtil.statusBarLightMode(this);
     }
 
     @Override
