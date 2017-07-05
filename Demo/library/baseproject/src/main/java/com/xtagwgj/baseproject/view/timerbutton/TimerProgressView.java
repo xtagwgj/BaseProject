@@ -14,6 +14,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.xtagwgj.baseproject.utils.LogUtils;
+
 /**
  * 带时间限制的进度条视图
  * Created by xtagwgj on 2017/7/1
@@ -21,6 +23,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 public class TimerProgressView extends View {
 
     public static final String TAG = TimerProgressView.class.getSimpleName();
+
+    private boolean isDebug = true;
 
     //最开始的 最小的进度数
     private float mStartingProgress;
@@ -141,6 +145,11 @@ public class TimerProgressView extends View {
         int widthSizePx = MeasureSpec.getSize(widthMeasureSpec);
         int heightSizePx = MeasureSpec.getSize(heightMeasureSpec);
 
+        if (isDebug) {
+            LogUtils.e(TAG, "width=" + widthSizePx);
+            LogUtils.e(TAG, "height=" + heightSizePx);
+        }
+
         isCircle = widthSizePx == heightSizePx;
 
         //圆半径
@@ -248,9 +257,10 @@ public class TimerProgressView extends View {
                 drawVerticalProgress(canvas);
             }
 
-            //画分割线
-            canvas.drawRoundRect(roundSplitBounds,
-                    roundRadius - mProgressSize, roundRadius - mProgressSize, mSplitPaint);
+            if (!isDebug)
+                //画分割线
+                canvas.drawRoundRect(roundSplitBounds,
+                        roundRadius - mProgressSize, roundRadius - mProgressSize, mSplitPaint);
         }
 
     }
@@ -301,11 +311,14 @@ public class TimerProgressView extends View {
 
         //画底部线段
         if (currentAngel < 360 - lineAngel / 2 - circleAngel) {
-            canvas.drawRect(maxX, roundRadius * 2,
-                    maxX - (currentAngel - circleAngel - lineAngel / 2) / lineAngel * longLineHeight,
-                    roundRadius, mProgressPaint);
+
+            canvas.drawRect(maxX - (currentAngel - circleAngel - lineAngel / 2) / lineAngel * longLineHeight,
+                    roundRadius,
+                    maxX,
+                    roundRadius * 2, mProgressPaint);
+
         } else {
-            canvas.drawRect(maxX, roundRadius * 2, roundRadius, roundRadius, mProgressPaint);
+            canvas.drawRect(roundRadius, roundRadius , maxX, roundRadius* 2, mProgressPaint);
         }
 
         //未超过底部的线段

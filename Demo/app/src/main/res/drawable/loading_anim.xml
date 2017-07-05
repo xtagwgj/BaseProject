@@ -4,7 +4,7 @@
 
     <item android:duration="1000">
         <layer-list>
-            <item android:drawable="@mipmap/round_loading_bg" />
+            <!--<item android:drawable="@mipmap/round_loading_bg" />-->
             <item android:drawable="@mipmap/round_loading" />
         </layer-list>
     </item>
