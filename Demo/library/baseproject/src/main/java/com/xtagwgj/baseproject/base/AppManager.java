@@ -190,7 +190,7 @@ public class AppManager {
     }
 
 
-    private int activityStackSize() {
+    public int activityStackSize() {
         return activityStack == null ? 0 : activityStack.size();
     }
 }

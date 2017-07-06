@@ -52,11 +52,6 @@ public class TitleLayout extends RelativeLayout {
     //更多按钮的资源
     private int moreRes = R.mipmap.btn_add_new;
 
-    //标题的背景色
-    private int bgColorRes = R.color.colorPrimaryDark;
-
-    //标题字体颜色
-    private int titleTextColorInt;
 
     public TitleLayout(Context context) {
         this(context, null);
@@ -87,8 +82,8 @@ public class TitleLayout extends RelativeLayout {
             backRes = array.getResourceId(R.styleable.TitleLayout_arrowImgRes, backRes);
             showMoreImageView = array.getBoolean(R.styleable.TitleLayout_rightImgShow, false);
             moreRes = array.getResourceId(R.styleable.TitleLayout_rightImgRes, moreRes);
-            int bgColorInt = array.getColor(R.styleable.TitleLayout_bgColorRes, getResources().getColor(bgColorRes));
-            titleTextColorInt = array.getColor(R.styleable.TitleLayout_titleColor, getResources().getColor(android.R.color.black));
+            int bgColorInt = array.getColor(R.styleable.TitleLayout_bgColorRes, getResources().getColor(R.color.colorPrimaryDark));
+            int titleTextColorInt = array.getColor(R.styleable.TitleLayout_titleColor, getResources().getColor(android.R.color.black));
             titleLayout.setBackgroundColor(bgColorInt);
 
             String titleName = array.getString(R.styleable.TitleLayout_titleName);
@@ -133,6 +128,17 @@ public class TitleLayout extends RelativeLayout {
     }
 
     /**
+     * 标题的背景颜色
+     *
+     * @param bgColorInt colorInt 默认是colorPrimary
+     */
+    public void setBgColorInt(@ColorInt int bgColorInt) {
+        if (titleLayout != null)
+            titleLayout.setBackgroundColor(bgColorInt);
+    }
+
+
+    /**
      * 设置标题
      *
      * @param titleResId 标题id
@@ -145,7 +151,7 @@ public class TitleLayout extends RelativeLayout {
     /**
      * 设置标题字体的颜色
      *
-     * @param colorInt
+     * @param colorInt colorInt 默认黑色
      */
     public void setTitleTextColor(@ColorInt int colorInt) {
         if (titleTextView != null)
