@@ -3,6 +3,7 @@
     <!--自定义标题栏-->
     <declare-styleable name="TitleLayout">
         <attr name="titleName" format="string" />
+        <attr name="titleColor" format="color"/>
         <attr name="rightImgShow" format="boolean" />
         <attr name="rightImgRes" format="integer" />
         <attr name="arrowImgShow" format="boolean" />

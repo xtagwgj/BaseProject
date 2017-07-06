@@ -24,7 +24,7 @@ public class TimerProgressView extends View {
 
     public static final String TAG = TimerProgressView.class.getSimpleName();
 
-    private boolean isDebug = true;
+    private boolean isDebug = false;
 
     //最开始的 最小的进度数
     private float mStartingProgress;

@@ -3,6 +3,7 @@ package com.xtagwgj.baseproject.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -30,7 +31,7 @@ import io.reactivex.functions.Consumer;
 
 public class TitleLayout extends RelativeLayout {
 
-    //返回按钮、更过按钮
+    //返回按钮、更多按钮
     private ImageView backImageView, moreImageView;
 
     //标题栏
@@ -53,6 +54,9 @@ public class TitleLayout extends RelativeLayout {
 
     //标题的背景色
     private int bgColorRes = R.color.colorPrimaryDark;
+
+    //标题字体颜色
+    private int titleTextColorInt;
 
     public TitleLayout(Context context) {
         this(context, null);
@@ -84,11 +88,12 @@ public class TitleLayout extends RelativeLayout {
             showMoreImageView = array.getBoolean(R.styleable.TitleLayout_rightImgShow, false);
             moreRes = array.getResourceId(R.styleable.TitleLayout_rightImgRes, moreRes);
             int bgColorInt = array.getColor(R.styleable.TitleLayout_bgColorRes, getResources().getColor(bgColorRes));
-
+            titleTextColorInt = array.getColor(R.styleable.TitleLayout_titleColor, getResources().getColor(android.R.color.black));
             titleLayout.setBackgroundColor(bgColorInt);
 
             String titleName = array.getString(R.styleable.TitleLayout_titleName);
             setTitleText(StringUtils.null2Length0(titleName));
+            setTitleTextColor(titleTextColorInt);
 
             array.recycle();
         }
@@ -113,6 +118,10 @@ public class TitleLayout extends RelativeLayout {
         setMoreImageViewVisiable(showMoreImageView);
     }
 
+    public TextView getTitleTextView() {
+        return titleTextView;
+    }
+
     /**
      * 设置标题
      *
@@ -131,6 +140,16 @@ public class TitleLayout extends RelativeLayout {
     public void setTitleText(@StringRes int titleResId) {
         if (titleTextView != null)
             titleTextView.setText(titleResId);
+    }
+
+    /**
+     * 设置标题字体的颜色
+     *
+     * @param colorInt
+     */
+    public void setTitleTextColor(@ColorInt int colorInt) {
+        if (titleTextView != null)
+            titleTextView.setTextColor(colorInt);
     }
 
     /**
