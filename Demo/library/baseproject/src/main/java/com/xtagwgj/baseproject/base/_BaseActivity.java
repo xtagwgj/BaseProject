@@ -1,6 +1,5 @@
 package com.xtagwgj.baseproject.base;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -60,9 +58,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         // 把activity放到栈中管理
         AppManager.getAppManager().addActivity(this);
 
-        //设置没有标题栏和ActionBar
-        setNoTitleOrActionBar();
-
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -75,21 +70,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         initStatusBar();
     }
 
-    /**
-     * 没有标题栏和ActionBar
-     */
-    private void setNoTitleOrActionBar() {
-        // 无标题
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null)
-            actionBar.hide();
-
-        android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null)
-            supportActionBar.hide();
-    }
 
     /*********************
      * 子类实现
@@ -194,6 +174,7 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        closeLoadingDialog();
         super.onDestroy();
         AppManager.getAppManager().finishActivity(this);
     }
