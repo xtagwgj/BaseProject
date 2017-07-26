@@ -15,7 +15,7 @@ import io.reactivex.functions.Consumer;
  */
 
 public class RxManager {
-    public RxBus mRxBus = RxBus.getInstance();
+    private RxBus mRxBus = RxBus.getInstance();
     //管理rxbus订阅
     private Map<String, Observable<?>> mObservables = new HashMap<>();
     /*管理Observables 和 Subscribers订阅*/

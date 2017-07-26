@@ -10,14 +10,6 @@
         <!--activity动画-->
         <item name="android:windowAnimationStyle">@style/aty_anim</item>
 
-        <!--设置全局button的样式-->
-        <!--<item name="buttonStyle">@style/btnStyle</item>-->
-
-        <item name="dayNightBackground">@color/day_background_color</item>
-        <item name="dayNightOneTextColor">@color/day_one_text_color</item>
-        <item name="dayNightTwoTextColor">@color/day_two_text_color</item>
-        <item name="dayNightThreeTextColor">@color/day_three_text_color</item>
-        <item name="dayNightBackgroundDrawable">@color/day_background_color</item>
     </style>
 
     <!--冷启动界面-->
@@ -25,23 +17,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-
-    <!--白天主题，此处直接和AppTheme一样-->
-    <style name="DayTheme" parent="XAppTheme" />
-
-    <!--夜间主题-->
-    <style name="NightTheme" parent="XAppTheme">
-        <item name="colorPrimary">@color/night_background_color</item>
-        <item name="colorPrimaryDark">@color/night_background_color</item>
-        <item name="colorAccent">@color/night_background_color</item>
-
-        <item name="dayNightBackground">@color/night_background_color</item>
-        <item name="dayNightOneTextColor">@color/night_one_text_color</item>
-        <item name="dayNightTwoTextColor">@color/night_two_text_color</item>
-        <item name="dayNightThreeTextColor">@color/night_there_text_color</item>
-        <item name="dayNightBackgroundDrawable">@color/night_there_text_color</item>
-
-    </style>
 
     <!--Button样式-->
     <!--<style name="btnStyle" parent="Base.Widget.AppCompat.Button">-->

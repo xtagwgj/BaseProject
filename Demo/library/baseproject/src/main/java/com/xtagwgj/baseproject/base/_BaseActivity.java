@@ -17,7 +17,6 @@ import com.xtagwgj.baseproject.utils.StringUtils;
 import com.xtagwgj.baseproject.utils.ToastUtils;
 import com.xtagwgj.baseproject.view.loadingdialog.view.LoadingDialog;
 import com.xtagwgj.baseproject.widget.StatusBarUtil;
-import com.xtagwgj.baseproject.widget.daynightmode.ChangeModeController;
 
 import java.util.concurrent.TimeUnit;
 
@@ -52,9 +51,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
      * 设置layout前配置
      */
     protected void doBeforeSetContentView() {
-        //设置昼夜主题
-        initTheme();
-
         // 把activity放到栈中管理
         AppManager.getAppManager().addActivity(this);
 
@@ -83,13 +79,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
     //初始化点击事件
     public abstract void initEventListener();
 
-
-    /**
-     * 设置主题
-     */
-    protected void initTheme() {
-        ChangeModeController.setTheme(this, R.style.DayTheme, R.style.NightTheme);
-    }
 
     /**
      * 强制隐藏输入法键盘

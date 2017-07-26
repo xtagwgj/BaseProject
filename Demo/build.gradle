@@ -41,21 +41,11 @@ ext {
     ]
 
     lib = [
-            support_version : "25.3.0",
-            multidex        : "1.0.1",
+            support_version : "25.3.1",
             rxbinding2      : "2.0.0",
-            rxjava2         : "2.0.1",
+            rxjava2         : "2.1.2",
             rxandroid2      : "2.0.1",
-            rxdownload2     : "2.0.0-beta3",
-            rxpermissions   : "0.9.3@aar",
-            rxlifecycle2    : "2.0.1",
-            adapterHelper   : "2.9.22",
-            constraintLayout: "1.0.0-beta4",
-
-            //
-            butterknife     : "8.4.0",
-            MPAndroidChart  : "v3.0.2",
-            crashreport     : "+",
+            rxlifecycle2    : "2.1.0",
 
     ]
 }

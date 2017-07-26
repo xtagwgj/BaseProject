@@ -22,17 +22,13 @@ dependencies {
     compile "com.android.support:appcompat-v7:${libs.support_version}"
     compile "com.android.support:recyclerview-v7:${libs.support_version}"
     compile "com.android.support:design:${libs.support_version}"
-//    compile "com.android.support:multidex:${libs.multidex}"//分包
 
     compile "com.jakewharton.rxbinding2:rxbinding:${libs.rxbinding2}"
     compile "io.reactivex.rxjava2:rxjava:${libs.rxjava2}"
-    compile "io.reactivex.rxjava2:rxandroid:${libs.rxandroid2}"
-    compile "zlc.season:rxdownload2:${libs.rxdownload2}"
-    compile "com.tbruyelle.rxpermissions2:rxpermissions:${libs.rxpermissions}"
+//    compile "io.reactivex.rxjava2:rxandroid:${libs.rxandroid2}"
     compile "com.trello.rxlifecycle2:rxlifecycle:${libs.rxlifecycle2}"
     compile "com.trello.rxlifecycle2:rxlifecycle-android:${libs.rxlifecycle2}"
     compile "com.trello.rxlifecycle2:rxlifecycle-components:${libs.rxlifecycle2}"
 
-    compile "com.github.CymChad:BaseRecyclerViewAdapterHelper:${libs.adapterHelper}"
 
 }

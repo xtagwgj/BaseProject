@@ -16,6 +16,23 @@ import io.reactivex.subjects.Subject;
 /**
  * 用RxJava实现的EventBus
  * Created by xtagwgj on 2017/4/9.
+ * <p>
+ * <p>
+ * 发送数据
+ * RxBus.getInstance().post(TAG,"aaa");
+ * <p>
+ * 接收数据
+ * RxBus.getInstance().register(TAG)
+ * .subscribe(new Consumer<Object>() {
+ *
+ * @Override public void accept(Object o) throws Exception {
+ * <p>
+ * }
+ * }, new Consumer<Throwable>() {
+ * @Override public void accept(Throwable throwable) throws Exception {
+ * <p>
+ * }
+ * });
  */
 
 public class RxBus {

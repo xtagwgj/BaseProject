@@ -5,12 +5,15 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.xtagwgj.baseproject.base.RxBus;
 import com.xtagwgj.baseproject.base._BaseActivity;
 import com.xtagwgj.baseproject.utils.EmptyUtils;
 import com.xtagwgj.baseproject.widget.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends _BaseActivity {
 
@@ -40,6 +43,8 @@ public class MainActivity extends _BaseActivity {
 //
 //
 //        timerButton.setProgressListener(null);
+
+
 
         final Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_loading);
         animation.setAnimationListener(new Animation.AnimationListener() {

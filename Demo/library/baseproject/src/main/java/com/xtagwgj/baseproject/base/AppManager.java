@@ -13,7 +13,7 @@ import java.util.Stack;
  */
 
 public class AppManager {
-    public static final String TAG = "AppManager";
+    private static final String TAG = "AppManager";
 
     private static Stack<Activity> activityStack;
     private volatile static AppManager instance;

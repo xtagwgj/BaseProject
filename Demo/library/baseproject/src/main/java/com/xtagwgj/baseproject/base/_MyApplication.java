@@ -19,15 +19,4 @@ public abstract class _MyApplication extends Application {
 
     protected abstract void initService();
 
-//    /**
-//     * 分包
-//     *
-//     * @param base
-//     */
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        MultiDex.install(this);
-//    }
-
 }

@@ -1,14 +1,11 @@
 package com.xtagwgj.baseproject.utils;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
-
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -24,7 +21,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 

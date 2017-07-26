@@ -33,12 +33,15 @@ public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.s
             rootView = inflater.inflate(getLayoutId(), container, false);
         }
 
-        initView(savedInstanceState);
-        initEventListener();
-
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView(savedInstanceState);
+        initEventListener();
+    }
 
     //获取布局文件
     protected abstract int getLayoutId();
