@@ -8,7 +8,7 @@ package com.xtagwgj.baseproject.constant;
 public class BaseConstants {
 
     //防抖的时间 单位：毫秒
-    public static final int THROTTLE_TIME = 600;
+    public static final long THROTTLE_TIME = 600L;
 
     //获取验证码的倒计时，单位：秒
     public static final int GET_CODE_COUNT_DOWN_SECONDS = 60;

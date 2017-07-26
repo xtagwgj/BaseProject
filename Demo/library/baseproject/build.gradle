@@ -24,8 +24,8 @@ dependencies {
     compile "com.android.support:design:${libs.support_version}"
 
     compile "com.jakewharton.rxbinding2:rxbinding:${libs.rxbinding2}"
-    compile "io.reactivex.rxjava2:rxjava:${libs.rxjava2}"
-//    compile "io.reactivex.rxjava2:rxandroid:${libs.rxandroid2}"
+//    compile "io.reactivex.rxjava2:rxjava:${libs.rxjava2}"
+    compile "io.reactivex.rxjava2:rxandroid:${libs.rxandroid2}"
     compile "com.trello.rxlifecycle2:rxlifecycle:${libs.rxlifecycle2}"
     compile "com.trello.rxlifecycle2:rxlifecycle-android:${libs.rxlifecycle2}"
     compile "com.trello.rxlifecycle2:rxlifecycle-components:${libs.rxlifecycle2}"
