@@ -3,6 +3,7 @@ package com.xtagwgj.baseproject.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,7 +31,7 @@ public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.s
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
-            rootView = inflater.inflate(getLayoutId(), container, false);
+            rootView = initContentView(getLayoutId(), inflater, container);
         }
 
         return rootView;
@@ -43,6 +44,11 @@ public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.s
         initEventListener();
     }
 
+    //获取Fragment的view，需要的时候可修改支持
+    protected View initContentView(@LayoutRes int layoutRes, LayoutInflater inflater, ViewGroup container) {
+        return inflater.inflate(layoutRes, container, false);
+    }
+
     //获取布局文件
     protected abstract int getLayoutId();
 
@@ -52,7 +58,7 @@ public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.s
     //点击事件
     protected abstract void initEventListener();
 
-    protected void clickEvent(@NonNull View view,@NonNull Consumer consumer) {
+    protected void clickEvent(@NonNull View view, @NonNull Consumer<Object> consumer) {
         RxView.clicks(view)
                 .throttleFirst(BaseConstants.THROTTLE_TIME, TimeUnit.MILLISECONDS)
                 .compose(this.bindToLifecycle())

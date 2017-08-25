@@ -3,6 +3,7 @@ package com.xtagwgj.baseproject.base;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -13,8 +14,6 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.xtagwgj.baseproject.R;
 import com.xtagwgj.baseproject.constant.BaseConstants;
-import com.xtagwgj.baseproject.utils.StringUtils;
-import com.xtagwgj.baseproject.utils.ToastUtils;
 import com.xtagwgj.baseproject.view.loadingdialog.view.LoadingDialog;
 import com.xtagwgj.baseproject.widget.StatusBarUtil;
 
@@ -36,15 +35,11 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         super.onCreate(savedInstanceState);
 
         doBeforeSetContentView();
-        setContentView(getLayoutId());
-        doAfterSetContentView();
+
+        initContentView(getLayoutId());
 
         initView(savedInstanceState);
         initEventListener();
-    }
-
-    protected void initStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
     }
 
     /**
@@ -57,11 +52,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //设置状态栏颜色
-        initStatusBar();
-    }
-
-    protected void doAfterSetContentView() {
         //设置状态栏颜色
         initStatusBar();
     }
@@ -79,6 +69,14 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
     //初始化点击事件
     public abstract void initEventListener();
 
+    //设置内容的视图，方便dataBinding使用
+    protected void initContentView(@LayoutRes int layoutResID) {
+        setContentView(layoutResID);
+    }
+
+    protected void initStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);
+    }
 
     /**
      * 强制隐藏输入法键盘
@@ -90,7 +88,7 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
             inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
-    protected void clickEvent(@NonNull View view,@NonNull Consumer consumer) {
+    protected void clickEvent(@NonNull View view, @NonNull Consumer consumer) {
         RxView.clicks(view)
                 .throttleFirst(BaseConstants.THROTTLE_TIME, TimeUnit.MILLISECONDS)
                 .compose(this.bindToLifecycle())
@@ -150,15 +148,6 @@ public abstract class _BaseActivity extends RxAppCompatActivity {
 
             }
         });
-    }
-
-    protected void showToast(@StringRes int resId) {
-//        Snackbar.make(getCurrentFocus(), msg, Snackbar.LENGTH_SHORT).show();
-        ToastUtils.showShortToast(this, getString(resId));
-    }
-
-    protected void showToast(@NonNull String msg) {
-        ToastUtils.showShortToast(this, StringUtils.null2Length0(msg));
     }
 
     @Override

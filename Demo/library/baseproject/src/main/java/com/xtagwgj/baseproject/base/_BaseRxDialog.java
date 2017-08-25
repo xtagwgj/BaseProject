@@ -1,6 +1,7 @@
 package com.xtagwgj.baseproject.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -30,7 +31,13 @@ public abstract class _BaseRxDialog extends RxDialogFragment {
 
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        return inflater.inflate(getLayoutId(), null);
+        return initContentView(inflater, getLayoutId(), null);
+    }
+
+
+    //获取Fragment的view，需要的时候可修改支持
+    protected View initContentView(LayoutInflater inflater, @LayoutRes int layoutRes, @Nullable ViewGroup container) {
+        return inflater.inflate(layoutRes, container);
     }
 
 //    @NonNull
