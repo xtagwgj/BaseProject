@@ -1,10 +1,8 @@
 package com.xtagwgj.baseproject.base;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,18 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
-import com.jakewharton.rxbinding2.view.RxView;
-import com.xtagwgj.baseproject.constant.BaseConstants;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.functions.Consumer;
-
 /**
  * Fragment基类
  * A simple {@link Fragment} subclass.
  */
-public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.support.RxFragment {
+public abstract class _BaseFragment extends Fragment {
 
     protected View rootView;
 
@@ -53,17 +44,10 @@ public abstract class _BaseFragment extends com.trello.rxlifecycle2.components.s
     protected abstract int getLayoutId();
 
     //初始化view
-    protected abstract void initView(Bundle savedInstanceState);
+    protected abstract void initView(@Nullable Bundle savedInstanceState);
 
     //点击事件
     protected abstract void initEventListener();
-
-    protected void clickEvent(@NonNull View view, @NonNull Consumer<Object> consumer) {
-        RxView.clicks(view)
-                .throttleFirst(BaseConstants.THROTTLE_TIME, TimeUnit.MILLISECONDS)
-                .compose(this.bindToLifecycle())
-                .subscribe(consumer);
-    }
 
     /**
      * 强制隐藏输入法键盘

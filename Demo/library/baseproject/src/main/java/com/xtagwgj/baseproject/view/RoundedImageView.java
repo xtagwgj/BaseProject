@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 /**
+ * 圆形头像
  * Created by xtagwgj on 2017/6/17.
  */
 

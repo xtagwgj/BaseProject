@@ -27,7 +27,7 @@ android {
     configurations.all {
         // 有版本冲突的时候强制使用指定的版本，对于相关依赖也同样有效
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
-        resolutionStrategy.force 'io.reactivex.rxjava2:rxjava:2.0.2'
+        resolutionStrategy.force 'io.reactivex.rxjava2:rxjava:2.1.0'
     }
 
     repositories {

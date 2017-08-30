@@ -1,5 +1,6 @@
 package com.xtagwgj.baseproject.base;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -11,20 +12,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.jakewharton.rxbinding2.view.RxView;
-import com.trello.rxlifecycle2.components.support.RxDialogFragment;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.functions.Consumer;
-
-import static com.xtagwgj.baseproject.constant.BaseConstants.THROTTLE_TIME;
-
 /**
  * 对话框
  * Created by xtagwgj on 2017/7/26.
  */
-public abstract class _BaseRxDialog extends RxDialogFragment {
+public abstract class _BaseRxDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,13 +69,4 @@ public abstract class _BaseRxDialog extends RxDialogFragment {
 
     protected abstract void initView();
 
-    protected void clickEvent(View view, Consumer consumer) {
-        if (view == null)
-            return;
-
-        RxView.clicks(view)
-                .throttleFirst(THROTTLE_TIME, TimeUnit.MILLISECONDS)
-                .compose(this.bindToLifecycle())
-                .subscribe(consumer);
-    }
 }
