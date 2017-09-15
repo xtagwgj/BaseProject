@@ -23,17 +23,19 @@ public abstract class _BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = initContentView(getLayoutId(), inflater, container);
+            initView(savedInstanceState);
+            initEventListener();
         }
 
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initView(savedInstanceState);
-        initEventListener();
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        initView(savedInstanceState);
+//        initEventListener();
+//    }
 
     //获取Fragment的view，需要的时候可修改支持
     protected View initContentView(@LayoutRes int layoutRes, LayoutInflater inflater, ViewGroup container) {
