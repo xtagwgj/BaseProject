@@ -13,12 +13,12 @@ android {
         minSdkVersion cfg.minSdkVersion
         targetSdkVersion cfg.targetVersion
     }
-
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    compile "com.android.support:support-v4:${libs.support_version}"
     compile "com.android.support:recyclerview-v7:${libs.support_version}"
     compile "com.android.support:appcompat-v7:${libs.support_version}"
     compile "com.android.support:design:${libs.support_version}"
